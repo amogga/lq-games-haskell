@@ -1,4 +1,4 @@
-module Examples.E1.Dynamics(discreteLinearDynamicsS1, discreteLinearDynamics) where
+module Examples.E1.Dynamics(discreteLinearDynamicsS1, discreteLinearDynamics, nonlinearDynamics, linearDynamics) where
 
 import Numeric.AD
 import Numeric.LinearAlgebra
@@ -23,11 +23,17 @@ linearDynamics x u = (a,bs)
 
 -- Overall system consisting of three players
 system :: Floating a => [a] -> [a]
-system xu  = concat (zipWith (\sys (x,u) -> sys x u) dyn xuv)
+system xu = concat (zipWith (\sys (x,u) -> sys x u) dyn xuv)
   where
     dyn = [carDyn,carDyn,bicDyn]
     (xs, us) = splitAt 12 xu
     xuv = zip (chunksOf 4 xs) (chunksOf 2 us)
+
+nonlinearDynamics :: Floating a => [a] -> [a] -> [a]
+nonlinearDynamics x u = concat (zipWith (\sys (xs,us) -> sys xs us) dyn xuv)
+  where
+    dyn = [carDyn,carDyn,bicDyn]
+    xuv = zip (chunksOf 4 x) (chunksOf 2 u)
 
 -- Model equations
 carDyn :: Floating a => [a] -> [a] -> [a]

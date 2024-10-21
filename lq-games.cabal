@@ -29,6 +29,7 @@ library
       Examples.E1.Discretization
       Examples.E1.Dynamics
       Examples.E1.Helpers
+      Examples.E1.ODESolver
   other-modules:
       Paths_lq_games
   autogen-modules:

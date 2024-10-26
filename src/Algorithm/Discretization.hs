@@ -1,4 +1,4 @@
-module Algorithms.Discretization where
+module Algorithm.Discretization where
 
 import Prelude hiding ((<>))
 import Numeric.LinearAlgebra

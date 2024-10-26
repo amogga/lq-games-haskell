@@ -1,4 +1,4 @@
-module Plots.GlossSketch where
+module Plot.GlossSketch where
 
 import Graphics.Gloss
 

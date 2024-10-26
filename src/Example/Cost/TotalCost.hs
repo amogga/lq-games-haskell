@@ -1,13 +1,10 @@
-module Examples.E1.Costs.TotalCost where
+module Example.Cost.TotalCost where
 
-import Types.Basic
-import Numeric.LinearAlgebra
-import Examples.E1.Costs.GoalCost
-import Examples.E1.Costs.PolylineCost
-import Examples.E1.Costs.VelocityCost
-import Examples.E1.Costs.ProximityCost
+import Example.Cost.GoalCost
+import Example.Cost.PolylineCost
+import Example.Cost.VelocityCost
+import Example.Cost.ProximityCost
 import Data.List.Split (chunksOf)
-import Data.List (transpose)
 
 totalCost :: (Floating a, Ord a) => [a] -> [a] -> Int -> a
 totalCost states input player = case player of
@@ -37,14 +34,3 @@ totalCost states input player = case player of
     playerInput = chunksOf 2 input !! (player - 1)
     (minvCar,maxvCar) = (0,10)
     (minvBicycle,maxvBicycle) = (1,2.5)
-
--- Convenience functions for later use
-totalCostsForPlayersPerIteration :: [StateControlData] -> [R]
-totalCostsForPlayersPerIteration iterationStateControlPairs = map sum (transpose costPerHorizon)
-  where
-    costPerHorizon = map totalCostsForPlayers iterationStateControlPairs
-
-totalCostsForPlayers :: StateControlData -> [R]
-totalCostsForPlayers controlInputPairs = map (totalCost (toList x) (toList u)) [1..3]
-  where
-    StateControlPair x u = controlInputPairs

@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wno-partial-fields #-}
 {-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
-module Examples.E1.Simulation where 
+module Example.Simulation where 
 
 import Prelude hiding ((<>))
 import Numeric.LinearAlgebra
@@ -9,8 +9,9 @@ import Control.Monad.State
 import Control.Monad (zipWithM)
 import Types.Basic
 import Dynamics.DiscreteModels
-import Examples.E1.Quadratization
-import Algorithms.ODESolver
+import Example.Quadratization
+import Example.Utilities
+import Algorithm.ODESolver
 
 type StateResponseSolverState = Vector R
     
@@ -47,10 +48,3 @@ overallSolver statesInput = controlStateResponseSolver initialState statesInput 
     where
         pAndAlpha = lqGameSolverE1 statesInput
         initialState = priorState $ head statesInput
-
-
-generateInitialStateControlPairs :: Vector R -> Vector R -> Int -> [StateControlData]
-generateInitialStateControlPairs states input horizon = zipWith StateControlPair initialOperatingPoints initialInputs
-    where
-        initialOperatingPoints = take horizon $ iterate (`nonlinearDynamicsSolve` input) states
-        initialInputs = replicate horizon input

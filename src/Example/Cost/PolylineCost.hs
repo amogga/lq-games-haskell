@@ -1,6 +1,7 @@
-module Examples.E1.Costs.PolylineCost where
+module Example.Cost.PolylineCost where
+
 import Data.List.Split (chunksOf)
-import Algorithms.Helpers
+import Algorithm.Basic
 
 polylineCost :: (Floating a, Ord a) => [a] -> Int -> a
 polylineCost states player = case player of

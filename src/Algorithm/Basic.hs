@@ -1,4 +1,4 @@
-module Algorithms.Helpers where
+module Algorithm.Basic where
 
 import Linear(distance,dot, (^-^),(^+^),(^*))
 import qualified Data.Vector as V

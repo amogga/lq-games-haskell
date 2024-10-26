@@ -27,7 +27,6 @@ dependencies:
 - vector >= 0.13.1.0
 - linear
 - split
-- criterion
 - diagrams-lib
 - diagrams-rasterific
 - diagrams-svg
@@ -56,6 +55,25 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
+    - lq-games
+  example1:
+    main:                Main.hs
+    source-dirs:         examples/Example1
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - lq-games
+  benchmark:
+    main: Benchmark.hs
+    source-dirs: bench
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - criterion
     - lq-games
 
 tests:

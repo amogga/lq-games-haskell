@@ -1,4 +1,4 @@
-module Plots.TrajectorySketch where
+module Plot.TrajectorySketch where
 
 import Diagrams.Prelude
 import Diagrams.Backend.SVG

@@ -1,8 +1,7 @@
-module Algorithms.ODESolver (nonlinearDynamicsSolve) where
+module Algorithm.ODESolver (nonlinearDynamicsSolve) where
 
 import Dynamics.MultiModels
 import Numeric.LinearAlgebra
-
 
 nonlinearDynamicsSolve :: Vector R -> Vector R -> Vector R
 nonlinearDynamicsSolve = rk4Solve nonlinearDynamics

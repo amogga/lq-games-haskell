@@ -1,15 +1,15 @@
 {-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
 
-module Examples.E1.Quadratization where
+module Example.Quadratization where
 
 -- import Data.Matrix
 import Numeric.AD
 import Numeric.LinearAlgebra
-import Algorithms.Helpers
+import Algorithm.Basic
 import Data.List.Split (chunksOf)
 import Types.Basic
 import Data.List (transpose)
-import Examples.E1.Costs.TotalCost
+import Example.Cost.TotalCost
 
 quadratizeCosts :: StateControlData -> LinearMultiSystemCosts
 quadratizeCosts stateControlPair = LinearMultiSystemCosts qs ls rs

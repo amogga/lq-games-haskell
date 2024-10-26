@@ -1,6 +1,7 @@
-module Examples.E1.Costs.ProximityCost where
+module Example.Cost.ProximityCost where
+  
 import Data.List.Split (chunksOf)
-import Algorithms.Helpers
+import Algorithm.Basic
 
 proximityCost :: (Floating a, Ord a) => [a] -> Int -> a
 proximityCost states player = sum $ map (**2) costs

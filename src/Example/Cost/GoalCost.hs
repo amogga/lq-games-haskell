@@ -1,7 +1,7 @@
-module Examples.E1.Costs.GoalCost where
+module Example.Cost.GoalCost where
 
 import Data.List.Split (chunksOf)
-import Algorithms.Helpers
+import Algorithm.Basic
 
 goalCost :: Floating a => [a] -> Int -> a
 goalCost states player = case player of

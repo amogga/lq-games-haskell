@@ -1,4 +1,4 @@
-module Examples.E1.Costs.VelocityCost where
+module Example.Cost.VelocityCost where
 import Data.List.Split (chunksOf)
 
 

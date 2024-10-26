@@ -21,12 +21,17 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+- mtl
 - hmatrix >= 0.20.2
 - ad >= 4.5.6
 - vector >= 0.13.1.0
 - linear
 - split
 - criterion
+- diagrams-lib
+- diagrams-rasterific
+- diagrams-svg
+- gloss
 
 ghc-options:
 - -Wall

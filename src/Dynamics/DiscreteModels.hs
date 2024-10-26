@@ -1,0 +1,26 @@
+module Dynamics.DiscreteModels where
+
+
+import Types.Basic
+import Numeric.LinearAlgebra
+import Algorithms.Discretization
+import Dynamics.MultiModels
+
+
+discreteLinearDynamicsVS1:: StateControlData -> LinearMultiSystemDynamics
+discreteLinearDynamicsVS1 xu = discreteLinearDynamicsS1 x u
+  where
+    StateControlPair x u = xu
+
+discreteLinearDynamicsS1:: Vector R -> Vector R -> LinearMultiSystemDynamics
+discreteLinearDynamicsS1 x u = discreteLinearDynamics x u 0.25
+
+discreteLinearDynamics :: Vector R -> Vector R -> Double -> LinearMultiSystemDynamics 
+discreteLinearDynamics x u s = LinearDiscreteMultiSystemDynamics {systemMatrix = ad, inputMatrices = bsd, samplingPeriod = s}
+  where 
+    ad = systemMatrix dlinsys
+    bsd = inputMatrices dlinsys
+    dlinsys = forwardEulerMulti (linearDynamics x u) s
+
+
+

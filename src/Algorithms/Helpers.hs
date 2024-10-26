@@ -1,4 +1,4 @@
-module Examples.E1.Helpers (euclidDistance, pointLineDistance) where
+module Algorithms.Helpers where
 
 import Linear(distance,dot, (^-^),(^+^),(^*))
 import qualified Data.Vector as V

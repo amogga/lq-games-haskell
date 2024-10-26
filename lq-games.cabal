@@ -25,11 +25,24 @@ source-repository head
 
 library
   exposed-modules:
-      Examples.E1.Costs
-      Examples.E1.Discretization
-      Examples.E1.Dynamics
-      Examples.E1.Helpers
-      Examples.E1.ODESolver
+      Algorithms.Discretization
+      Algorithms.Helpers
+      Algorithms.ODESolver
+      Dynamics.DiscreteModels
+      Dynamics.Models
+      Dynamics.MultiModels
+      Examples.E1.Costs.GoalCost
+      Examples.E1.Costs.PolylineCost
+      Examples.E1.Costs.ProximityCost
+      Examples.E1.Costs.TotalCost
+      Examples.E1.Costs.VelocityCost
+      Examples.E1.Players
+      Examples.E1.Quadratization
+      Examples.E1.Simulation
+      Plots.GlossSketch
+      Plots.TrajectorySketch
+      Solver.LQGame
+      Types.Basic
   other-modules:
       Paths_lq_games
   autogen-modules:
@@ -41,8 +54,13 @@ library
       ad >=4.5.6
     , base >=4.7 && <5
     , criterion
+    , diagrams-lib
+    , diagrams-rasterific
+    , diagrams-svg
+    , gloss
     , hmatrix >=0.20.2
     , linear
+    , mtl
     , split
     , vector >=0.13.1.0
   default-language: Haskell2010
@@ -60,9 +78,14 @@ executable lq-games-exe
       ad >=4.5.6
     , base >=4.7 && <5
     , criterion
+    , diagrams-lib
+    , diagrams-rasterific
+    , diagrams-svg
+    , gloss
     , hmatrix >=0.20.2
     , linear
     , lq-games
+    , mtl
     , split
     , vector >=0.13.1.0
   default-language: Haskell2010
@@ -81,9 +104,14 @@ test-suite lq-games-test
       ad >=4.5.6
     , base >=4.7 && <5
     , criterion
+    , diagrams-lib
+    , diagrams-rasterific
+    , diagrams-svg
+    , gloss
     , hmatrix >=0.20.2
     , linear
     , lq-games
+    , mtl
     , split
     , vector >=0.13.1.0
   default-language: Haskell2010

@@ -1,0 +1,22 @@
+module Type.Position where 
+
+newtype Position a = Position (a,a) deriving (Show, Eq)
+
+instance Functor Position where
+  fmap f (Position (x, y)) = Position (f x, f y)
+
+positionFromList :: [a] -> Maybe (Position a)
+positionFromList [x, y] = Just (Position (x, y))
+positionFromList _      = Nothing
+
+listFromPosition :: Position a -> [a]
+listFromPosition position = let Position (x,y) = position in [x,y]
+
+instance Num a => Num (Position a) where
+    (Position (x1, y1)) + (Position (x2, y2)) = Position (x1 + x2, y1 + y2)
+    (Position (x1, y1)) - (Position (x2, y2)) = Position (x1 - x2, y1 - y2)
+    (Position (x1, y1)) * (Position (x2, y2)) = Position (x1 * x2, y1 * y2)
+    abs (Position (x, y)) = Position (abs x, abs y)
+    signum (Position (x, y)) = Position (signum x, signum y)
+    fromInteger n = Position (fromInteger n, fromInteger n)
+    negate (Position (x, y)) = Position (-x, -y)

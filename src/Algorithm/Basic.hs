@@ -2,9 +2,16 @@ module Algorithm.Basic where
 
 import Linear(distance,dot, (^-^),(^+^),(^*))
 import qualified Data.Vector as V
+import Type.Position
+
+euclidPositionsDistance :: Floating a => Position a -> Position a -> a
+euclidPositionsDistance p1 p2 = euclidDistance (listFromPosition p1) (listFromPosition p2)
 
 euclidDistance :: Floating a => [a] -> [a] -> a
 euclidDistance p1 p2 = distance (V.fromList p1) (V.fromList p2)
+
+pointLinePositionDistance :: (Floating a, Ord a) => Position a -> [[a]] -> a
+pointLinePositionDistance point = pointLineDistance (listFromPosition point)
 
 pointLineDistance :: (Floating a, Ord a) => [a] -> [[a]] -> a
 pointLineDistance point polyline = minimum $ map distanceToLineSegment polylinePairs

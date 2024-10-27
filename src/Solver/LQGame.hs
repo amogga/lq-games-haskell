@@ -5,7 +5,7 @@ module Solver.LQGame where
 
 import Prelude hiding ((<>))
 import Numeric.LinearAlgebra
-import Types.Basic
+import Type.Basic
 import Control.Monad.State
 import Control.Monad (zipWithM)
 

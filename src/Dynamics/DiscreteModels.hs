@@ -1,7 +1,7 @@
 module Dynamics.DiscreteModels where
 
 
-import Types.Basic
+import Type.Basic
 import Numeric.LinearAlgebra
 import Algorithm.Discretization
 import Dynamics.MultiModels

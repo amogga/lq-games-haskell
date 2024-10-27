@@ -2,7 +2,7 @@ module Algorithm.Discretization where
 
 import Prelude hiding ((<>))
 import Numeric.LinearAlgebra
-import Types.Basic
+import Type.Basic
 
 forwardEulerMulti :: LinearMultiSystemDynamics -> Double -> LinearMultiSystemDynamics
 forwardEulerMulti (LinearContinuousMultiSystemDynamics a bs) ts = LinearDiscreteMultiSystemDynamics ad bd ts

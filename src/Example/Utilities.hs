@@ -1,6 +1,7 @@
 module Example.Utilities where
 
-import Types.Basic
+import Type.Basic
+import Type.Player
 import Numeric.LinearAlgebra
 import Data.List (transpose)
 import Example.Cost.TotalCost

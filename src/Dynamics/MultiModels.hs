@@ -3,7 +3,7 @@ module Dynamics.MultiModels where
 import Data.List.Split (chunksOf)
 import Dynamics.Models
 import Numeric.LinearAlgebra
-import Types.Basic
+import Type.Basic
 import Numeric.AD
 
 linearDynamics :: Vector R -> Vector R -> LinearMultiSystemDynamics

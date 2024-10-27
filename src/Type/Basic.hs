@@ -1,4 +1,4 @@
-module Types.Basic where
+module Type.Basic where
 
 import Numeric.LinearAlgebra
 
@@ -8,7 +8,7 @@ data LinearMultiSystemDynamics = LinearContinuousMultiSystemDynamics {systemMatr
 
 data LinearMultiSystemCosts = LinearMultiSystemCosts { statesHessians :: [Matrix R], statesGradients:: [Vector R], inputHessians :: [[Matrix R]] } deriving (Show)
 
-data LinearSystemCosts = LinearSystemCosts { statesHessian :: Matrix R, stateGradient:: Vector R, inputHessian :: [Matrix R] }
+data LinearSystemCosts = LinearSystemCosts { statesHessian :: Matrix R, stateGradient:: Vector R, inputHessian :: [Matrix R] } deriving (Show)
 
 
 

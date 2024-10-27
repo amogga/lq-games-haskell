@@ -20,7 +20,6 @@ myCircle = circle 2
             # bg white
 
 
-
 createPlot :: IO ()
 createPlot = do
     let points = [(1, 1), (2, 3), (3, 2), (4, 4), (5, 1)]

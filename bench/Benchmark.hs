@@ -3,7 +3,7 @@ module Main (main) where
 import Criterion.Main
 import Example.Quadratization
 import Numeric.LinearAlgebra
-import Types.Basic
+import Type.Basic
 
 main :: IO ()
 main = defaultMain [

@@ -1,13 +1,14 @@
 module Example.Cost.GoalCost where
 
-import Data.List.Split (chunksOf)
 import Algorithm.Basic
+import Type.Player
+import Type.Position
+import Type.Utilities
+import Type.CostInfo
 
-goalCost :: Floating a => [a] -> Int -> a
-goalCost states player = case player of
-  1 -> let goal = [6.0,35.0] in euclidDistance position goal ** 2
-  2 -> let goal = [12,12] in euclidDistance position goal ** 2
-  3 -> let goal = [15,21] in euclidDistance position goal ** 2
-  _ -> error "No more players! Choose from player set {1,2,3}"
+goalCostFromStates :: Floating a => [a] -> Player a -> a
+goalCostFromStates states player = goalCost position player
+  where position = positionOfPlayer states player
 
-  where position = map (take 2) (chunksOf 4 states) !! (player - 1)
+goalCost :: Floating a => Position a -> Player a -> a
+goalCost position player = euclidPositionsDistance position (goalC $ costInfo player) ** 2

@@ -36,14 +36,19 @@ library
       Example.Cost.ProximityCost
       Example.Cost.TotalCost
       Example.Cost.VelocityCost
-      Example.Players
       Example.Quadratization
       Example.Simulation
       Example.Utilities
       Plot.GlossSketch
       Plot.TrajectorySketch
       Solver.LQGame
-      Types.Basic
+      Type.Basic
+      Type.CostInfo
+      Type.Index
+      Type.Player
+      Type.Position
+      Type.Utilities
+      Type.Weight
   other-modules:
       Paths_lq_games
   autogen-modules:
@@ -93,6 +98,7 @@ executable benchmark
 executable example1
   main-is: Main.hs
   other-modules:
+      Players
       Paths_lq_games
   autogen-modules:
       Paths_lq_games

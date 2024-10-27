@@ -8,25 +8,29 @@ import Solver.LQGame
 import Control.Monad.State
 import Control.Monad (zipWithM)
 import Type.Basic
+import Type.Player
 import Dynamics.DiscreteModels
 import Example.Quadratization
 import Example.Utilities
 import Algorithm.ODESolver
-
-type StateResponseSolverState = Vector R
     
--- runSimulation :: Vector R -> Vector R -> Int -> [[StateControlData]]
--- runSimulation states input iterationsCount =  take iterationsCount $ iterate overallSolver stateControlPairs
---     where
---         horizon = 20
---         stateControlPairs = generateInitialStateControlPairs states input horizon
+runSimulation :: [Player R] -> Vector R -> Vector R -> Int -> [[StateControlData]]
+runSimulation players states input iterationsCount =  take iterationsCount $ iterate (overallSolver players) stateControlPairs
+    where
+        horizon = 20
+        stateControlPairs = generateInitialStateControlPairs states input horizon
 
+overallSolver :: [Player R] -> [StateControlData] -> [StateControlData]
+overallSolver players statesInput = controlStateResponseSolver initialState statesInput pAndAlpha
+    where
+        pAndAlpha = lqGameSolverWStateControl players statesInput
+        initialState = priorState $ head statesInput
 
--- lqGameSolverE1 :: [StateControlData] -> [PAndAlpha]
--- lqGameSolverE1 stateControlPair = lqGameSolver dynlist costslist
---     where 
---         dynlist = reverse $ map discreteLinearDynamicsVS1 stateControlPair
---         costslist = reverse $ map quadratizeCosts stateControlPair
+lqGameSolverWStateControl :: [Player R] -> [StateControlData] -> [PAndAlpha]
+lqGameSolverWStateControl players stateControlPair = lqGameSolver dynlist costslist
+    where 
+        dynlist = reverse $ map discreteLinearDynamicsVS1 stateControlPair
+        costslist = reverse $ map (quadratizeCosts players) stateControlPair
 
 computeControlStateStep :: StateControlData -> PAndAlpha -> State StateResponseSolverState StateControlData
 computeControlStateStep cspair pAndAlpha = do
@@ -42,9 +46,3 @@ computeControlStateStep cspair pAndAlpha = do
 
 controlStateResponseSolver :: Vector R -> [StateControlData] -> [PAndAlpha] -> [StateControlData]
 controlStateResponseSolver initialStates stateControlData pAndAlpha = evalState (zipWithM computeControlStateStep stateControlData pAndAlpha) initialStates
-
--- overallSolver :: [StateControlData] -> [StateControlData]
--- overallSolver statesInput = controlStateResponseSolver initialState statesInput pAndAlpha
---     where
---         pAndAlpha = lqGameSolverE1 statesInput
---         initialState = priorState $ head statesInput

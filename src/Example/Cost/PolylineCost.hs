@@ -5,13 +5,13 @@ import Type.Player
 import Type.CostInfo
 import Type.Utilities
 
-polylineCost :: (Floating a, Ord a) => [a] -> Player a -> a
-polylineCost states player = pointLinePositionDistance position polyline ** 2
+polylineCost :: (Floating a, Ord a) => Player a -> [a] -> a
+polylineCost player states = pointLinePositionDistance position polyline ** 2
   where 
     polyline = polylineC $ costInfo player
-    position = positionOfPlayer states player
+    position = positionOfPlayer player states
 
-polylineBoundaryCost :: (Floating a, Ord a) => [a] -> Player a -> a
-polylineBoundaryCost states player = if plineCost > threshold then plineCost else 0
-  where plineCost = polylineCost states player
+polylineBoundaryCost :: (Floating a, Ord a) => Player a -> [a] -> a
+polylineBoundaryCost player states = if plineCost > threshold then plineCost else 0
+  where plineCost = polylineCost player states
         threshold = polylineBoundaryThresholdC $ costInfo player

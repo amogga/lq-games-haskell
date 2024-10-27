@@ -9,9 +9,6 @@ import Type.Basic
 import Control.Monad.State
 import Control.Monad (zipWithM)
 
-data LQGameState = LQGameState { z::[Matrix R], zeta::[Vector R] } deriving (Show)
-data PAndAlpha = PAndAlpha { pMatrix :: Matrix R, alphaMatrix :: Matrix R} deriving (Show)
-
 lqGameSolver :: [LinearMultiSystemDynamics] -> [LinearMultiSystemCosts] -> [PAndAlpha]
 lqGameSolver dynlist costslist = reverse $ evalState (zipWithM computeStep dynlist costslist) initialState
     where

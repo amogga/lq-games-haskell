@@ -4,14 +4,14 @@ import Type.Player
 import Type.Index
 import Type.CostInfo
 
-maximumVelocityCost :: (Floating a, Ord a) => [a] -> Player a -> a
-maximumVelocityCost states player = max (velocity - threshold) 0 ** 2
+maximumVelocityCost :: (Floating a, Ord a) => Player a -> [a] -> a
+maximumVelocityCost player states = max (velocity - threshold) 0 ** 2
   where
     velocity = states !! velocityStateIndex (stateIndex player)
     threshold = maxVelocityC $ costInfo player
 
-minimumVelocityCost :: (Floating a, Ord a) => [a] -> Player a -> a
-minimumVelocityCost states player = min (velocity - threshold) 0 ** 2
+minimumVelocityCost :: (Floating a, Ord a) => Player a -> [a] -> a
+minimumVelocityCost player states = min (velocity - threshold) 0 ** 2
   where
     velocity = states !! velocityStateIndex (stateIndex player)
     threshold = minVelocityC $ costInfo player

@@ -13,12 +13,12 @@ generateInitialStateControlPairs states input horizon = zipWith StateControlPair
         initialOperatingPoints = take horizon $ iterate (`nonlinearDynamicsSolve` input) states
         initialInputs = replicate horizon input
 
-totalCostsForPlayersPerIteration :: [StateControlData] -> [R]
-totalCostsForPlayersPerIteration iterationStateControlPairs = map sum (transpose costPerHorizon)
+totalCostsForPlayersPerIteration :: [Player R] -> [StateControlData] -> [R]
+totalCostsForPlayersPerIteration players iterationStateControlPairs = map sum (transpose costPerHorizon)
   where
-    costPerHorizon = map totalCostsForPlayers iterationStateControlPairs
+    costPerHorizon = map (totalCostsForPlayers players) iterationStateControlPairs
 
-totalCostsForPlayers :: StateControlData -> [R]
-totalCostsForPlayers controlInputPairs = map (totalCost (toList x) (toList u)) [1..3]
+totalCostsForPlayers :: [Player R] -> StateControlData -> [R]
+totalCostsForPlayers players controlInputPairs = map (\player -> totalCost player (toList x) (toList u)) players
   where
     StateControlPair x u = controlInputPairs

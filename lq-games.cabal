@@ -99,6 +99,7 @@ executable example1
   main-is: Main.hs
   other-modules:
       Players
+      Simulation
       Paths_lq_games
   autogen-modules:
       Paths_lq_games

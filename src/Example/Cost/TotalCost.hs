@@ -17,7 +17,7 @@ totalCost player states input =
   in
 
   case player of
-    (Car _ _ _ stateWeightCar inputWeightCar) -> 
+    (Car _ _ _ stateWeightCar inputWeightCar _) -> 
 
                                            let polylineCostP =  polylineCost player states
                                                polylineBoundaryCostP = polylineBoundaryCost player states
@@ -33,7 +33,7 @@ totalCost player states input =
                                               angularVelocityW inputWeightCar * angularVelocityCostP ** 2 + 
                                               accelerationW inputWeightCar * accelerationCostP ** 2
 
-    (Bicycle _ _ _ stateWeightBicycle inputWeightBicycle) -> 
+    (Bicycle _ _ _ stateWeightBicycle inputWeightBicycle _) -> 
                                             
                                             let steeringAngleCostP = input !! steeringAngleInputIndex (inputIndex player)
                                                 accelerationCostP = input !! accelerationInputIndex (inputIndex player)

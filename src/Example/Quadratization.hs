@@ -15,6 +15,16 @@ quadratizeCosts :: [Player R] -> StateControlData -> LinearMultiSystemCosts
 quadratizeCosts players stateControlPair = LinearMultiSystemCosts qs ls rs
   where
     (qs,ls,rs) = unzip3 $ map extractComponents players
+    x = priorState stateControlPair
+    u = controlInput stateControlPair
+    extractComponents player =
+      let LinearSystemCosts q l r = quadratizeCostsForPlayer x u player
+      in (q, l, r)
+
+quadratizeCostsO :: [Player R] -> StateControlData -> LinearMultiSystemCosts
+quadratizeCostsO players stateControlPair = LinearMultiSystemCosts qs ls rs
+  where
+    (qs,ls,rs) = unzip3 $ map extractComponents players
     StateControlPair x u = stateControlPair
     extractComponents player =
       let LinearSystemCosts q l r = quadratizeCostsForPlayer x u player

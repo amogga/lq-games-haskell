@@ -14,8 +14,16 @@ import Example.Quadratization
 import Example.Utilities
 import Algorithm.ODESolver
     
-runSimulation :: [Player R] -> Vector R -> Vector R -> Int -> [[StateControlData]]
-runSimulation players states input iterationsCount =  take iterationsCount $ iterate (overallSolver players) stateControlPairs
+runSimulationWithTermination :: [Player R] -> Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
+runSimulationWithTermination players states input termination maxIteration =  take maxIteration $ takeWhile condition $ iterate (overallSolver players) stateControlPairs
+    where
+        horizon = 20
+        stateControlPairs = generateInitialStateControlPairs states input horizon
+        condition x = norm_2 (responseState (nextVal x) - priorState (nextVal x)) ** 2 > termination
+        nextVal x = last $ overallSolver players x
+
+runSimulationWithIteration :: [Player R] -> Vector R -> Vector R -> Int -> [[StateControlData]]
+runSimulationWithIteration players states input iterationsCount =  take iterationsCount $ iterate (overallSolver players) stateControlPairs
     where
         horizon = 20
         stateControlPairs = generateInitialStateControlPairs states input horizon
@@ -34,6 +42,19 @@ lqGameSolverWStateControl players stateControlPair = lqGameSolver dynlist costsl
 
 computeControlStateStep :: StateControlData -> PAndAlpha -> State StateResponseSolverState StateControlData
 computeControlStateStep cspair pAndAlpha = do
+    x <- get
+    let xref = priorState cspair
+    let uref = controlInput cspair
+    let PAndAlpha p alpha = pAndAlpha
+    let alphaScale = 0.1
+
+    let u = reshape 1 uref - p <> (reshape 1 x - reshape 1 xref) - scale alphaScale alpha
+    let xn = nonlinearDynamicsSolve x (flatten u)
+    put xn
+    return $ StateControlWResponse x (flatten u) xn
+
+computeControlStateStepN :: StateControlData -> PAndAlpha -> State StateResponseSolverState StateControlData
+computeControlStateStepN cspair pAndAlpha = do
     x <- get
     let StateControlPair xref uref = cspair
     let PAndAlpha p alpha = pAndAlpha

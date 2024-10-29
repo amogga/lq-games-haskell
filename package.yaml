@@ -28,9 +28,10 @@ dependencies:
 - linear
 - split
 - diagrams-lib
-- diagrams-rasterific
-- diagrams-svg
-- gloss
+- diagrams-cairo
+- filepath
+- directory
+- process
 
 ghc-options:
 - -Wall

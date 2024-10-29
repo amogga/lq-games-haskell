@@ -16,12 +16,14 @@ players = [player1, player2, bicycle]
 lqGameSolverE1 :: [StateControlData] -> [PAndAlpha]
 lqGameSolverE1 = lqGameSolverWStateControl players
 
-
 quadratizeCostsE1 :: StateControlData -> LinearMultiSystemCosts
 quadratizeCostsE1 = quadratizeCosts players
 
-runSimulationE1 :: Vector R -> Vector R -> Int -> [[StateControlData]]
-runSimulationE1 = runSimulation players
+runSimulationWithTerminationE1 :: Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
+runSimulationWithTerminationE1 = runSimulationWithTermination players
+
+runSimulationWithIterationE1 :: Vector R -> Vector R -> Int -> [[StateControlData]]
+runSimulationWithIterationE1 = runSimulationWithIteration players
 
 totalCostsForPlayersPerIterationE1 :: [StateControlData] -> [R]
 totalCostsForPlayersPerIterationE1 = totalCostsForPlayersPerIteration players

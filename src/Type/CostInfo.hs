@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -Wno-partial-fields #-}
 module Type.CostInfo (CostInfo(..)) where 
+
 import Type.Position
 
 data CostInfo a = CostInfo1 {

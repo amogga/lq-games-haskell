@@ -28,10 +28,10 @@ data InputWeight a =
             } deriving (Show, Eq)
 
 instance Functor StateWeight where
-  fmap f (StateWeight1 goalW polylineW boundaryW maxVelW minVelW proxW) =
-    StateWeight1 (f goalW) (f polylineW) (f boundaryW) (f maxVelW) (f minVelW) (f proxW)
-  fmap f (StateWeight2 goalW maxVelW minVelW proxW) =
-    StateWeight2 (f goalW) (f maxVelW) (f minVelW) (f proxW)
+  fmap f (StateWeight1 goalWht polylineWht boundaryW maxVelW minVelW proxW) =
+    StateWeight1 (f goalWht) (f polylineWht) (f boundaryW) (f maxVelW) (f minVelW) (f proxW)
+  fmap f (StateWeight2 goalWht maxVelW minVelW proxW) =
+    StateWeight2 (f goalWht) (f maxVelW) (f minVelW) (f proxW)
 
 
 

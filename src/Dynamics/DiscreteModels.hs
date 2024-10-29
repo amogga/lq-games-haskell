@@ -8,7 +8,10 @@ import Dynamics.MultiModels
 
 
 discreteLinearDynamicsVS1:: StateControlData -> LinearMultiSystemDynamics
-discreteLinearDynamicsVS1 xu = discreteLinearDynamicsS1 x u
+discreteLinearDynamicsVS1 xu = discreteLinearDynamicsS1 (priorState xu) (controlInput xu)
+
+discreteLinearDynamicsVS1O:: StateControlData -> LinearMultiSystemDynamics
+discreteLinearDynamicsVS1O xu = discreteLinearDynamicsS1 x u
   where
     StateControlPair x u = xu
 

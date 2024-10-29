@@ -3,6 +3,7 @@ module Algorithm.Basic where
 import Linear(distance,dot, (^-^),(^+^),(^*))
 import qualified Data.Vector as V
 import Type.Position
+import Type.Utilities
 
 euclidPositionsDistance :: Floating a => Position a -> Position a -> a
 euclidPositionsDistance p1 p2 = euclidDistance (listFromPosition p1) (listFromPosition p2)

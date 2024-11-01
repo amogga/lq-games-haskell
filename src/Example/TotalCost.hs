@@ -1,7 +1,7 @@
-module Example.Cost.TotalCost where
+module Example.TotalCost where
 
 import Example.Cost.GoalCost
-import Example.Cost.PolylineCost
+import Example.Cost.LaneCost
 import Example.Cost.VelocityCost
 import Example.Cost.ProximityCost
 import Type.Player
@@ -10,7 +10,8 @@ import Type.Index
 
 totalCost :: (Floating a, Ord a) => Player a -> [a] -> [a] -> a
 totalCost player states input =
-  let goalCostP = goalCostFromStates player states
+  let 
+      goalCostP = goalCostFromStates player states
       proximityP = proximityCostE1 player states
       maxVelCost = maximumVelocityCost player states
       minVelCost = minimumVelocityCost player states
@@ -24,12 +25,20 @@ totalCost player states input =
                                                angularVelocityCostP = input !! angularVelocityInputIndex (inputIndex player)
                                                accelerationCostP = input !! accelerationInputIndex (inputIndex player)
                                               in
-                                              -- states
+                                              -- progess
                                               goalW stateWeightCar * goalCostP +
+
+                                              -- stay in lane
                                               polylineW stateWeightCar * polylineCostP + polylineW stateWeightCar * polylineBoundaryCostP +
-                                              maxVelocityW stateWeightCar * maxVelCost + minVelocityW stateWeightCar * minVelCost +
+
+                                              -- adjust speed and keep within bounds: nominal, maximum and minimum speed
+                                              maxVelocityW stateWeightCar * maxVelCost + 
+                                              minVelocityW stateWeightCar * minVelCost +
+
+                                              -- avoid collisions with other road users
                                               proximityW stateWeightCar * proximityP +
-                                              -- inputs
+
+                                              -- penalize inputs: angular velocity and acceleration
                                               angularVelocityW inputWeightCar * angularVelocityCostP ** 2 + 
                                               accelerationW inputWeightCar * accelerationCostP ** 2
 
@@ -39,9 +48,17 @@ totalCost player states input =
                                                 accelerationCostP = input !! accelerationInputIndex (inputIndex player)
                                                
                                                in
+
+                                               -- progess
                                                 goalW stateWeightBicycle * goalCostP +
-                                                maxVelocityW stateWeightBicycle * maxVelCost + minVelocityW stateWeightBicycle * minVelCost +
+
+                                                -- adjust speed and keep within bounds: nominal, maximum and minimum speed
+                                                maxVelocityW stateWeightBicycle * maxVelCost + 
+                                                minVelocityW stateWeightBicycle * minVelCost +
+                                                
+                                                -- avoid collisions with other road users
                                                 proximityW stateWeightBicycle * proximityP + 
 
+                                                -- penalize inputs: steering angle and acceleration
                                                 steeringAngleW inputWeightBicycle * steeringAngleCostP ** 2 + 
                                                 accelerationW inputWeightBicycle * accelerationCostP ** 2

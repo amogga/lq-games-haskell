@@ -4,7 +4,7 @@ import Type.Basic
 import Type.Player
 import Numeric.LinearAlgebra
 import Data.List (transpose)
-import Example.Cost.TotalCost
+import Example.TotalCost
 import Algorithm.ODESolver
 
 generateInitialStateControlPairs :: Vector R -> Vector R -> Int -> [StateControlData]

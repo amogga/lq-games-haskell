@@ -15,3 +15,10 @@ minimumVelocityCost player states = min (velocity - threshold) 0 ** 2
   where
     velocity = states !! velocityStateIndex (stateIndex player)
     threshold = minVelocityC $ costInfo player
+
+
+nominalVelocityCost :: (Floating a) => Player a -> [a] -> a
+nominalVelocityCost player states = (velocity - nomVelocity) ** 2
+  where
+    velocity = states !! velocityStateIndex (stateIndex player)
+    nomVelocity = nominalVelocityC $ costInfo player

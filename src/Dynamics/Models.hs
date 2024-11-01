@@ -1,5 +1,4 @@
-module Dynamics.Models where
-
+module Dynamics.Models(carDyn, bicDyn) where
 
 -- Model equations
 carDyn :: Floating a => [a] -> [a] -> [a]

@@ -13,5 +13,6 @@ data InputIndex = InputIndex1 {
 data StateIndex = StateIndex1 {
                     positionStateIndices:: [Int],
                     psiStateIndex :: Int,
-                    velocityStateIndex:: Int
+                    velocityStateIndex:: Int,
+                    allPositionStateIndices:: [[Int]]
                 } deriving (Show, Eq)

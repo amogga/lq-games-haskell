@@ -8,7 +8,7 @@ module Example.Quadratization where
 import Numeric.AD
 import Numeric.LinearAlgebra
 import Type.Basic
-import Example.Cost.TotalCost
+import Example.TotalCost
 import Type.Player
 
 quadratizeCosts :: [Player R] -> StateControlData -> LinearMultiSystemCosts
@@ -17,15 +17,6 @@ quadratizeCosts players stateControlPair = LinearMultiSystemCosts qs ls rs
     (qs,ls,rs) = unzip3 $ map extractComponents players
     x = priorState stateControlPair
     u = controlInput stateControlPair
-    extractComponents player =
-      let LinearSystemCosts q l r = quadratizeCostsForPlayer x u player
-      in (q, l, r)
-
-quadratizeCostsO :: [Player R] -> StateControlData -> LinearMultiSystemCosts
-quadratizeCostsO players stateControlPair = LinearMultiSystemCosts qs ls rs
-  where
-    (qs,ls,rs) = unzip3 $ map extractComponents players
-    StateControlPair x u = stateControlPair
     extractComponents player =
       let LinearSystemCosts q l r = quadratizeCostsForPlayer x u player
       in (q, l, r)
@@ -46,10 +37,10 @@ inputHessian :: Vector R -> Vector R -> Player R -> [Matrix R]
 inputHessian states input player = rs
   where
     ar = matrix (size input) $ concat $ hessian totalCost' (toList input)
-    totalCost' u = totalCost (fmap auto player) (map auto (toList states)) u 
+    totalCost' u = totalCost (fmap auto player) (map auto (toList states)) u
     rs = map (\(x,y) -> ar ?? (Range x 1 y, Range x 1 y)) [(0,1),(2,3),(4,5)]
 
 systemStateGradient :: Vector R -> Vector R -> Player R -> Vector R
 systemStateGradient states input player = vector $ grad totalCost' (toList states)
   where
-    totalCost' x = totalCost (fmap auto player) x (map auto (toList input)) 
+    totalCost' x = totalCost (fmap auto player) x (map auto (toList input))

@@ -1,4 +1,4 @@
-module Example.Cost.PolylineCost where
+module Example.Cost.LaneCost where
 
 import Algorithm.Basic
 import Type.Player

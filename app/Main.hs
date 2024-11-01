@@ -1,9 +1,8 @@
 module Main (main) where
 
-import Example.Cost.TotalCost
+import Example.TotalCost
 import Numeric.LinearAlgebra
 import Example.Cost.ProximityCost
-import Plot.GlossSketch
 import Plot.TrajectorySketch
 
 main :: IO ()
@@ -19,5 +18,8 @@ main = do
     -- let pos2 = Position (4.4,5)
     -- createPlotViaGloss
     -- createPlot
-    print "sd"
+    let bn2 = norm_2 ((vector[1,2.3,4]) - (vector [2.2,3.4,3]))
+    let bninf = norm_Inf ((vector[1,2.3,4]) - (vector [2.2,3.4,3]))
+    print bn2
+    print bninf
     -- putStrLn "Hello, World!"

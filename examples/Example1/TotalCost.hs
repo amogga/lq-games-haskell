@@ -1,4 +1,4 @@
-module Example.TotalCost where
+module TotalCost where
 
 import Example.Cost.GoalCost
 import Example.Cost.LaneCost
@@ -7,6 +7,7 @@ import Example.Cost.ProximityCost
 import Type.Player
 import Type.Weight
 import Type.Index
+
 
 totalCost :: (Floating a, Ord a) => Player a -> [a] -> [a] -> a
 totalCost player states input =

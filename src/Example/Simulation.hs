@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -Wno-partial-fields #-}
 {-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
+{-# LANGUAGE RankNTypes #-}
 module Example.Simulation where 
 
 import Prelude hiding ((<>))
@@ -13,32 +14,33 @@ import Dynamics.DiscreteModels
 import Example.Quadratization
 import Example.Utilities
 import Algorithm.ODESolver
+import Type.Quadratization
     
-runSimulationWithTermination :: [Player R] -> Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
-runSimulationWithTermination players states input termination maxIteration =  take maxIteration $ takeWhile condition $ iterate (overallSolver players) stateControlPairs
+runSimulationWithTermination :: GenericCostFunctionType -> [Player R] -> Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
+runSimulationWithTermination totcost players states input termination maxIteration =  take maxIteration $ takeWhile condition $ iterate (overallSolver totcost players) stateControlPairs
     where
         horizon = 20
         stateControlPairs = generateInitialStateControlPairs states input horizon
         condition x = norm_2 (responseState (nextVal x) - priorState (nextVal x)) ** 2 > termination
-        nextVal x = last $ overallSolver players x
+        nextVal x = last $ overallSolver totcost players x
 
-runSimulationWithIteration :: [Player R] -> Vector R -> Vector R -> Int -> [[StateControlData]]
-runSimulationWithIteration players states input iterationsCount =  take iterationsCount $ iterate (overallSolver players) stateControlPairs
+runSimulationWithIteration :: GenericCostFunctionType -> [Player R] -> Vector R -> Vector R -> Int -> [[StateControlData]]
+runSimulationWithIteration totcost players states input iterationsCount =  take iterationsCount $ iterate (overallSolver totcost players) stateControlPairs
     where
         horizon = 20
         stateControlPairs = generateInitialStateControlPairs states input horizon
 
-overallSolver :: [Player R] -> [StateControlData] -> [StateControlData]
-overallSolver players statesInput = controlStateResponseSolver initialState statesInput pAndAlpha
+overallSolver :: GenericCostFunctionType -> [Player R] -> [StateControlData] -> [StateControlData]
+overallSolver totcost players statesInput = controlStateResponseSolver initialState statesInput pAndAlpha
     where
-        pAndAlpha = lqGameSolverWStateControl players statesInput
+        pAndAlpha = lqGameSolverWStateControl totcost players statesInput
         initialState = priorState $ head statesInput
 
-lqGameSolverWStateControl :: [Player R] -> [StateControlData] -> [PAndAlpha]
-lqGameSolverWStateControl players stateControlPair = lqGameSolver dynlist costslist
+lqGameSolverWStateControl :: GenericCostFunctionType -> [Player R] -> [StateControlData] -> [PAndAlpha]
+lqGameSolverWStateControl totCost players stateControlPair = lqGameSolver dynlist costslist
     where 
         dynlist = reverse $ map discreteLinearDynamicsVS1 stateControlPair
-        costslist = reverse $ map (quadratizeCosts players) stateControlPair
+        costslist = reverse $ map (quadratizeCosts totCost players) stateControlPair
 
 computeControlStateStep :: StateControlData -> PAndAlpha -> State StateResponseSolverState StateControlData
 computeControlStateStep cspair pAndAlpha = do

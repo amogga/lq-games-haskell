@@ -36,6 +36,7 @@ library
       Example.Cost.ProximityCost
       Example.Cost.VelocityCost
       Example.Quadratization
+      Example.Quadratization.GradientHessian
       Example.Simulation
       Example.TotalCost
       Example.Utilities
@@ -49,6 +50,7 @@ library
       Type.Player
       Type.Plot
       Type.Position
+      Type.Quadratization
       Type.Utilities
       Type.Weight
   other-modules:
@@ -105,7 +107,9 @@ executable example1
   main-is: Main.hs
   other-modules:
       Players
+      Quadratization
       Simulation
+      TotalCost
       Paths_lq_games
   autogen-modules:
       Paths_lq_games
@@ -133,7 +137,9 @@ executable example2
   main-is: Main.hs
   other-modules:
       Players
+      Quadratization
       Simulation
+      TotalCost
       Paths_lq_games
   autogen-modules:
       Paths_lq_games

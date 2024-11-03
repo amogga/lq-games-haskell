@@ -7,7 +7,8 @@ import Type.Weight
 import Type.Index
 import Diagrams.Prelude (sRGB24read)
 
-player1 :: Floating a => Player a 
+
+player1 :: Floating a => Player a
 player1 = let 
               -- state and input costs
               costInfo1 = CostInfo1 { goalC = Position (6.0,35.0), 

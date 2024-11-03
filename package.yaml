@@ -31,7 +31,6 @@ dependencies:
 - diagrams-cairo
 - filepath
 - directory
-- reflection
 - process
 
 ghc-options:

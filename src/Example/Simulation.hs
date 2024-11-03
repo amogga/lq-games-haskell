@@ -16,7 +16,7 @@ import Example.Utilities
 import Algorithm.ODESolver
 import Type.Quadratization
     
-runSimulationWithTermination :: GenericCostFunctionType -> [Player R] -> Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
+runSimulationWithTermination :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
 runSimulationWithTermination totcost players states input termination maxIteration =  take maxIteration $ takeWhile condition $ iterate (overallSolver totcost players) stateControlPairs
     where
         horizon = 20
@@ -24,19 +24,19 @@ runSimulationWithTermination totcost players states input termination maxIterati
         condition x = norm_2 (responseState (nextVal x) - priorState (nextVal x)) ** 2 > termination
         nextVal x = last $ overallSolver totcost players x
 
-runSimulationWithIteration :: GenericCostFunctionType -> [Player R] -> Vector R -> Vector R -> Int -> [[StateControlData]]
+runSimulationWithIteration :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> Int -> [[StateControlData]]
 runSimulationWithIteration totcost players states input iterationsCount =  take iterationsCount $ iterate (overallSolver totcost players) stateControlPairs
     where
         horizon = 20
         stateControlPairs = generateInitialStateControlPairs states input horizon
 
-overallSolver :: GenericCostFunctionType -> [Player R] -> [StateControlData] -> [StateControlData]
+overallSolver :: CostFunctionType -> [Player R] -> [StateControlData] -> [StateControlData]
 overallSolver totcost players statesInput = controlStateResponseSolver initialState statesInput pAndAlpha
     where
         pAndAlpha = lqGameSolverWStateControl totcost players statesInput
         initialState = priorState $ head statesInput
 
-lqGameSolverWStateControl :: GenericCostFunctionType -> [Player R] -> [StateControlData] -> [PAndAlpha]
+lqGameSolverWStateControl :: CostFunctionType -> [Player R] -> [StateControlData] -> [PAndAlpha]
 lqGameSolverWStateControl totCost players stateControlPair = lqGameSolver dynlist costslist
     where 
         dynlist = reverse $ map discreteLinearDynamicsVS1 stateControlPair

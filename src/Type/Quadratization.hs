@@ -1,12 +1,7 @@
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE RankNTypes #-}
-module Type.Quadratization where
+module Type.Quadratization (CostFunctionType) where
 
 import Type.Player
-import Numeric.AD.Mode.Sparse.Double
+import Numeric.AD
 
-type StateCostFunctionType f = forall s. Player (AD s SparseDouble) -> f (AD s SparseDouble) -> [AD s SparseDouble] -> AD s SparseDouble
-type InputCostFunctionType f = forall s. Player (AD s SparseDouble) -> [AD s SparseDouble] -> f (AD s SparseDouble) -> AD s SparseDouble
-
-type GenericCostFunctionType = forall s. Player (AD s SparseDouble) -> [AD s SparseDouble] -> [AD s SparseDouble] -> AD s SparseDouble
+type CostFunctionType = (forall s. (Mode s, Floating s, Ord s) => Player s -> [s] -> [s] -> s)

@@ -7,19 +7,20 @@ import Type.Player
 import Numeric.LinearAlgebra
 import Data.List (transpose)
 import Algorithm.ODESolver
+import Type.Quadratization
 
 generateInitialStateControlPairs :: Vector R -> Vector R -> Int -> [StateControlData]
 generateInitialStateControlPairs states input horizon = zipWith StateControlPair initialOperatingPoints initialInputs
-    where
-        initialOperatingPoints = take horizon $ iterate (`nonlinearDynamicsSolve` input) states
-        initialInputs = replicate horizon input
+  where
+    initialOperatingPoints = take horizon $ iterate (`nonlinearDynamicsSolve` input) states
+    initialInputs = replicate horizon input
 
-totalCostsForPlayersPerIteration :: (Player R -> [R] -> [R] -> R) -> [Player R] -> [StateControlData] -> [R]
+totalCostsForPlayersPerIteration :: CostFunctionType -> [Player R] -> [StateControlData] -> [R]
 totalCostsForPlayersPerIteration totCost players iterationStateControlPairs = map sum (transpose costPerHorizon)
   where
     costPerHorizon = map (totalCostsForPlayers totCost players) iterationStateControlPairs
 
-totalCostsForPlayers :: (Player R -> [R] -> [R] -> R) -> [Player R] -> StateControlData -> [R]
+totalCostsForPlayers :: CostFunctionType -> [Player R] -> StateControlData -> [R]
 totalCostsForPlayers totCost players controlStateData = map (\player -> totCost player (toList x) (toList u)) players 
   where 
     x = priorState controlStateData

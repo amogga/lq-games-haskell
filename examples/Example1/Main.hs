@@ -18,15 +18,15 @@ main = do
     let states = vector [6.5, 0.0, pi / 2.0 , 1.0, 1.5, 40, -(pi / 2.0), 0.1, 0.0, 22.0, 0.0, 2.0]
     let input = vector [0,0,0,0,0,0]
 
-    -- let iters = runSimulationWithTerminationE1 states input 2e-4 50
+    let iters = runSimulationWithTerminationE1 states input 2e-4 60
 
-    -- createAnimationWithIterations players iters
+    createAnimationWithIterations players iters
     -- let costs = map totalCostsForPlayersPerIterationE1 iters
     -- let ans2 = grad (\x -> totcost player1 x (map auto us)) sts
 
     -- let answer = stateGradientT totcost player1 sts us
     -- let answerMain = stateGradientT totalCost player1 (toList states) (toList input)
-    print $ last $ generateInitialStateControlPairs states input 20
+    -- print $ last $ generateInitialStateControlPairs states input 20
     -- print answer
     -- print answerMain
     -- let res3 = quadratizeCostsForPlayerAB totalCost states input player1

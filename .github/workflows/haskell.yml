@@ -1,0 +1,46 @@
+name: Haskell CI
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: ['*']
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: haskell-actions/setup@v2
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libpango1.0-dev libcairo2-dev
+        
+    - name: Cache
+      uses: actions/cache@v4
+      env:
+        cache-name: cache-stack
+      with:
+          path: ~/.stack
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/stack.yaml') }}-${{ hashFiles('**/stack.yaml.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+    - name: Install dependencies
+      run: stack build --only-dependencies --test --bench
+
+    - name: Build
+      run: stack build --test --bench
+
+    - name: Run tests
+      run: stack test

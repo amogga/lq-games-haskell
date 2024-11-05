@@ -76,6 +76,9 @@ library
 executable benchmark
   main-is: Benchmark.hs
   other-modules:
+      Players
+      Simulation
+      TotalCost
       Paths_lq_games
   autogen-modules:
       Paths_lq_games

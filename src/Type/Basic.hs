@@ -5,7 +5,8 @@ import Numeric.LinearAlgebra
 
 -- state and control data
 type StateResponseSolverState = Vector R
-data StateControlData = StateControlPair { priorState:: Vector R,  controlInput:: Vector R } | StateControlWResponse {  priorState:: Vector R,  controlInput:: Vector R, responseState :: Vector R} deriving (Show)
+data StateControlData = StateControlPair { priorState:: Vector R,  controlInput:: Vector R } | 
+                        StateControlWResponse {  priorState:: Vector R,  controlInput:: Vector R, responseState :: Vector R} deriving (Show)
 
 -- linear multi player dynamics
 data LinearMultiSystemDynamics = LinearContinuousMultiSystemDynamics {systemMatrix :: Matrix R, inputMatrices :: [Matrix R]} | 

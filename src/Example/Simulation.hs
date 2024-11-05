@@ -55,17 +55,5 @@ computeControlStateStep cspair pAndAlpha = do
     put xn
     return $ StateControlWResponse x (flatten u) xn
 
-computeControlStateStepN :: StateControlData -> PAndAlpha -> State StateResponseSolverState StateControlData
-computeControlStateStepN cspair pAndAlpha = do
-    x <- get
-    let StateControlPair xref uref = cspair
-    let PAndAlpha p alpha = pAndAlpha
-    let alphaScale = 0.1
-
-    let u = reshape 1 uref - p <> (reshape 1 x - reshape 1 xref) - scale alphaScale alpha
-    let xn = nonlinearDynamicsSolve x (flatten u)
-    put xn
-    return $ StateControlPair x (flatten u)
-
 controlStateResponseSolver :: Vector R -> [StateControlData] -> [PAndAlpha] -> [StateControlData]
 controlStateResponseSolver initialStates stateControlData pAndAlpha = evalState (zipWithM computeControlStateStep stateControlData pAndAlpha) initialStates

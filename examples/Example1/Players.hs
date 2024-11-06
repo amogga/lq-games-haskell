@@ -18,7 +18,7 @@ player1 = let
                                     }
 
               -- state and input weights
-              stateWeight1 = StateWeight1 { goalW = 4, 
+              stateWeight1 = StateWeight1 { goalW = 1, 
                                             polylineW = 50, polylineBoundaryW = 50, 
                                             minVelocityW = 100, maxVelocityW = 100, nominalVelocityW = 0,
                                             proximityW = 100
@@ -34,7 +34,9 @@ player1 = let
                                           velocityStateIndex = 3,
                                           allPositionStateIndices = [[0,1],[4,5],[8,9]]
                                         }
-              inputIndex1 = InputIndex1 { angularVelocityInputIndex = 0, accelerationInputIndex = 1 }
+
+              inputIndex1 = InputIndex1 { angularVelocityInputIndex = 0,
+                                          accelerationInputIndex = 1 }
               
               in Car { 
                       stateIndex = stateIndex1,
@@ -51,12 +53,12 @@ player2 = let
               -- state and input costs
               costInfo1 = CostInfo1 { goalC = Position (12,12), 
                                       polylineC = [[2.0,100.0],[2.0,18.0],[2.5,15.0],[3.0,14.0],[5.0,12.5],[8.0,12.0],[100.0,12.0]], polylineBoundaryThresholdC = 1, 
-                                      maxVelocityC = 10, minVelocityC = 0, nominalVelocityC = 5,
+                                      minVelocityC = 0, maxVelocityC = 10, nominalVelocityC = 5,
                                       proximityC = 2 
                                     }
 
               -- state and input weights
-              stateWeight1 = StateWeight1 { goalW = 3, 
+              stateWeight1 = StateWeight1 { goalW = 1, 
                                             polylineW = 50, polylineBoundaryW = 50, 
                                             maxVelocityW = 100, minVelocityW = 100, nominalVelocityW = 0, 
                                             proximityW = 100 
@@ -90,7 +92,7 @@ bicycle :: Floating a => Player a
 bicycle = let 
               -- state and input costs
               costInfo1 = CostInfo2 { goalC = Position (15,21), 
-                                      maxVelocityC = 8, minVelocityC = 0, nominalVelocityC = 4,
+                                      minVelocityC = 0, maxVelocityC = 10, nominalVelocityC = 4,
                                       proximityC = 1
                                     }
 

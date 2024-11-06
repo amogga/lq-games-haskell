@@ -18,7 +18,7 @@ player1 = let
                                     }
 
               -- state and input weights
-              stateWeight1 = StateWeight1 { goalW = 4, 
+              stateWeight1 = StateWeight1 { goalW = 1, 
                                             polylineW = 50, polylineBoundaryW = 50, 
                                             minVelocityW = 100, maxVelocityW = 100, nominalVelocityW = 0,
                                             proximityW = 100
@@ -56,7 +56,7 @@ player2 = let
                                     }
 
               -- state and input weights
-              stateWeight1 = StateWeight1 { goalW = 3, 
+              stateWeight1 = StateWeight1 { goalW = 1, 
                                             polylineW = 50, polylineBoundaryW = 50, 
                                             maxVelocityW = 100, minVelocityW = 100, nominalVelocityW = 0, 
                                             proximityW = 100 

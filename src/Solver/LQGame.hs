@@ -73,30 +73,21 @@ computeBeta (LinearDiscreteMultiSystemDynamics _ bs _) (PAndAlpha _ alpha) = -(f
 updateZsZetas :: LinearMultiSystemDynamics -> LinearMultiSystemCosts -> LQGameState -> PAndAlpha -> LQGameState
 updateZsZetas dynamics costs (LQGameState zs zts) pAndAlpha = LQGameState zsp ztsp
     where
-        -- zsp = [tr f <> (zs !! i) <> f + (qs !! i) | i <- [0..nplys-1]]
-        -- ztsp = [flatten $ tr f <> (reshape 1 (zts !! i) + (zs !! i) <> beta) + reshape 1 (ls !! i) | i <- [0..nplys - 1]]
-
         zsp = [tr f <> (zs !! i) <> f + (qs !! i) + sumZJ i | i <- [0..nplys-1]]
-
         ztsp = [flatten $ tr f <> (reshape 1 (zts !! i) + (zs !! i) <> beta) + reshape 1 (ls !! i) + sumZetaJ i | i <- [0..nplys - 1]]
 
-
         sumZJ i = sum [tr (ps i j) <> rs !! i !! j <> ps i j | j <- [0..nplys -1]]
-
         sumZetaJ i = sum [tr (ps i j) <> rs !! i !! j <> alphas i j | j <- [0..nplys -1]]
-
-        -- ri k = matrix (rows $ rpm k) [if i == j + (1*k) then 1 else 0 | i <- [0..5], j <- [0..1]]
 
         f = computeF dynamics pAndAlpha
         beta = computeBeta dynamics pAndAlpha
 
-        ps i j = let startRow = if i > 0 then sum [rows (rs !! k !! j) | k <- [0..i-1]] else 0
-                     endRow = startRow + rows (rs !! i !! j) - 1
-                 in p ?? ( Range startRow 1 endRow, All)
+        ps = partition rows p
+        alphas = partition cols alpha
 
-        alphas i j = let startRow = if i > 0 then sum [cols (rs !! k !! j) | k <- [0..i-1]] else 0
-                         endRow = startRow + cols (rs !! i !! j) - 1
-                     in alpha ?? ( Range startRow 1 endRow, All)
+        partition part p_or_alpha i j = let startRow = if i > 0 then sum [part (rs !! k !! j) | k <- [0..i-1]] else 0
+                                            endRow = startRow + part (rs !! i !! j) - 1
+                                        in p_or_alpha ?? ( Range startRow 1 endRow, All)
 
         nplys = length bs
 

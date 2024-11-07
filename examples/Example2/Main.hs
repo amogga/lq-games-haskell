@@ -14,5 +14,5 @@ main = do
 
     let pos = map (`positionOfPlayer` toList states) players
 
-    let prox = map (`proximityCostE1` toList states) players
+    let prox = map (`proximityCost` toList states) players
     print $ prox

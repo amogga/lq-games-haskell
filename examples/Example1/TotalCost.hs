@@ -13,7 +13,7 @@ totalCost :: (Floating a, Ord a) => Player a -> [a] -> [a] -> a
 totalCost player states input =
   let 
       goalCostP = goalCostFromStates player states
-      proximityP = proximityCostE1 player states
+      proximityP = proximityCost player states
       maxVelCost = maximumVelocityCost player states
       minVelCost = minimumVelocityCost player states
   in

@@ -19,7 +19,7 @@ pointLineDistance point polyline = minimum $ map distanceToLineSegment polylineP
     where
         polylinePairs = zip polyline (drop 1 polyline)
         distanceToLineSegment (ps1,ps2) = distance closestPoint p
-            where 
+            where
                 (p1,p2) = (V.fromList ps2, V.fromList ps1)
                 p = V.fromList point
                 lineVec = p2 ^-^ p1

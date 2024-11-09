@@ -75,6 +75,15 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - lq-games
+  example3:
+    main: Main.hs
+    source-dirs: examples/Example3
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - lq-games
   benchmark:
     main: Benchmark.hs
     source-dirs: bench

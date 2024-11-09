@@ -17,11 +17,11 @@ import Algorithm.ODESolver
 import Type.Quadratization
     
 runSimulationWithTermination :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
-runSimulationWithTermination totcost players states input termination maxIteration =  take maxIteration $ takeWhile condition $ iterate (overallSolver totcost players) stateControlPairs
+runSimulationWithTermination totcost players states input tolerance maxIteration =  take maxIteration $ takeWhile condition $ iterate (overallSolver totcost players) stateControlPairs
     where
         horizon = 20
         stateControlPairs = generateInitialStateControlPairs states input horizon
-        condition x = norm_2 (responseState (nextVal x) - priorState (nextVal x)) ** 2 > termination
+        condition x = norm_2 (responseState (nextVal x) - priorState (nextVal x)) ** 2 > tolerance
         nextVal x = last $ overallSolver totcost players x
 
 runSimulationWithIteration :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> Int -> [[StateControlData]]

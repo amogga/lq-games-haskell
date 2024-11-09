@@ -18,7 +18,7 @@ player1 = let
                                     }
 
               -- state and input weights
-              stateWeight1 = StateWeight1 { goalW = 1,
+              stateWeight1 = StateWeight1 { goalW = 4,
                                             polylineW = 50, polylineBoundaryW = 50,
                                             minVelocityW = 100, maxVelocityW = 100, nominalVelocityW = 0,
                                             proximityW = 100
@@ -58,7 +58,7 @@ player2 = let
                                     }
 
               -- state and input weights
-              stateWeight1 = StateWeight1 { goalW = 1,
+              stateWeight1 = StateWeight1 { goalW = 4,
                                             polylineW = 50, polylineBoundaryW = 50,
                                             maxVelocityW = 100, minVelocityW = 100, nominalVelocityW = 0,
                                             proximityW = 100
@@ -92,7 +92,7 @@ bicycle :: Floating a => Player a
 bicycle = let
               -- state and input costs
               costInfo1 = CostInfo2 { goalC = Position (15,21),
-                                      minVelocityC = 0, maxVelocityC = 10, nominalVelocityC = 4,
+                                      minVelocityC = 0, maxVelocityC = 6, nominalVelocityC = 4,
                                       proximityC = 1
                                     }
 

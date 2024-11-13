@@ -15,9 +15,10 @@ import Example.Quadratization
 import Example.Utilities
 import Algorithm.ODESolver
 import Type.Quadratization
-    
+
+-- simulation maximum iteration returns (maxIter + 1) array length because the array contains the initial value
 runSimulationWithTermination :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
-runSimulationWithTermination totcost players states input tolerance maxIteration =  take maxIteration $ takeWhile condition $ iterate (overallSolver totcost players) stateControlPairs
+runSimulationWithTermination totcost players states input tolerance maxIteration =  take (maxIteration+1) $ takeWhile condition $ iterate (overallSolver totcost players) stateControlPairs
     where
         horizon = 20
         stateControlPairs = generateInitialStateControlPairs states input horizon
@@ -25,7 +26,7 @@ runSimulationWithTermination totcost players states input tolerance maxIteration
         nextVal x = last $ overallSolver totcost players x
 
 runSimulationWithIteration :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> Int -> [[StateControlData]]
-runSimulationWithIteration totcost players states input iterationsCount =  take iterationsCount $ iterate (overallSolver totcost players) stateControlPairs
+runSimulationWithIteration totcost players states input iterationsCount =  take (iterationsCount + 1) $ iterate (overallSolver totcost players) stateControlPairs
     where
         horizon = 20
         stateControlPairs = generateInitialStateControlPairs states input horizon

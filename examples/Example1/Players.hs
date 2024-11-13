@@ -92,7 +92,7 @@ bicycle :: Floating a => Player a
 bicycle = let
               -- state and input costs
               costInfo1 = CostInfo2 { goalC = Position (15,21),
-                                      minVelocityC = 0, maxVelocityC = 6, nominalVelocityC = 4,
+                                      minVelocityC = 0, maxVelocityC = 10, nominalVelocityC = 4,
                                       proximityC = 1
                                     }
 

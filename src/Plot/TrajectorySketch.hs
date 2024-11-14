@@ -6,7 +6,7 @@ module Plot.TrajectorySketch where
 import Diagrams.Prelude
 import Diagrams.Backend.Cairo
 import Type.Player
-import Type.CostInfo
+import qualified Type.CostInfo as I
 import Type.Utilities
 import Type.Basic
 import Type.Plot
@@ -16,7 +16,7 @@ import Plot.Plotter
 goalSpot :: Player Double -> Diagram B
 goalSpot player = circle 0.2
                 # lc (color player)
-                # moveTo (p2 $ tupleFromPosition $ goalC $ costInfo player)
+                # moveTo (p2 $ tupleFromPosition $ I.goal $ costInfo player)
 
 spot :: Player Double -> (Double,Double) -> Diagram B
 spot player tuple = circle 0.2
@@ -30,12 +30,12 @@ createDiagram player iterationData = do
         playerinitPosition = tupleFromPosition $ positionOfPlayerFromStateControlData player (head iterationData)
         playerSpot = spot player playerinitPosition
 
-        playerGoal = goalSpot player
+       -- playerGoal = goalSpot player
 
         positions = map (positionOfPlayerFromStateControlData player) iterationData
         diagram = plotCPosition positions (color player)
 
-    diagram <> playerGoal <> playerSpot
+    diagram <> playerSpot
 
 createCar :: Player Double -> [StateControlData] -> Diagram B
 createCar player iterationData = do
@@ -55,8 +55,8 @@ createPlot pext players plotname iterationCount iterationData = do
         combinedPlot = mconcat $ map (`createDiagram` iterationData) players
         combinedCars = mconcat $ map (`createCar` iterationData) players
 
-        polyline1 = map (fromJust . positionFromList) (polylineC $ costInfo (players !! 0))
-        polyline2 = map (fromJust . positionFromList) (polylineC $ costInfo (players !! 1))
+        polyline1 = map (fromJust . positionFromList) (I.lane $ costInfo (players !! 0))
+        polyline2 = map (fromJust . positionFromList) (I.lane $ costInfo (players !! 1))
 
         
         comb = combinedCars <> combinedPlot <> addIterationCount iterationCount :: QDiagram Cairo V2 Double Any
@@ -73,5 +73,33 @@ createPlot pext players plotname iterationCount iterationData = do
 
     -- mapM_ (\ext -> renderCairo ("plots/iterations/" ++ plotname ++ "." ++ ext) (mkWidth 400) finalPlot) ["png","pdf"]
 
+createSimulationPlot :: PlotExtension -> [Player Double] -> String -> [StateControlData] -> IO ()
+createSimulationPlot pext players plotname iterationData = do
+    let
+        combinedPlot = mconcat $ map (`createDiagram` iterationData) players
+        combinedCars = mconcat $ map (`createCar` iterationData) players
+
+        polyline1 = map (fromJust . positionFromList) (I.lane $ costInfo (players !! 0))
+        polyline2 = map (fromJust . positionFromList) (I.lane $ costInfo (players !! 1))
+
+        
+        comb = combinedCars <> combinedPlot :: QDiagram Cairo V2 Double Any
+
+        polyPlot1 = plotBPosition polyline1 silver # lw thin # withEnvelope (boundingBox comb)
+        polyPlot2 = plotBPosition polyline2 silver # lw thin # withEnvelope (boundingBox comb)
+
+        restr = comb <> polyPlot1 <> polyPlot2
+        finalPlot = bg white (restr # centerXY # padX 1.3 # padY 1.1 )
+        -- finalPlotv = view (p2 (1, 2) :: Point V2 Double) (p2 (3, 34) :: Point V2 Double) finalPlot
+
+    -- renderCairo ("plots/iterations/" ++ plotname ++ extensionToString pext) (mkWidth 400) finalPlot
+    renderCairo ("plots/iterations/" ++ plotname ++ extensionToString pext) (mkSizeSpec2D (Just 300) (Just 600)) finalPlot
+
+    -- mapM_ (\ext -> renderCairo ("plots/iterations/" ++ plotname ++ "." ++ ext) (mkWidth 400) finalPlot) ["png","pdf"]
+
+
 createPNGPlot :: [Player Double] -> String -> Int -> [StateControlData] -> IO ()
 createPNGPlot = createPlot PNGext
+
+createSimulationPNGPlot :: [Player Double] -> String -> [StateControlData] -> IO ()
+createSimulationPNGPlot = createSimulationPlot PNGext

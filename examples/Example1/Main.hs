@@ -2,7 +2,7 @@ module Main(main) where
 
 import Numeric.LinearAlgebra
 import Simulation
-import Plot.CreateGifs
+import Plot.CreateGifs (createAnimationWithIterations)
 
 main :: IO ()
 main = do
@@ -10,15 +10,13 @@ main = do
     let input = vector [0,0,0,0,0,0]
 
     -- run simulation
-    let iters = runSimulationWithTerminationE1 states input 1e-4 100
-    -- print $ map priorState (last iters)
-
-    print $ length iters
+    let iters = runSimulationWithTerminationE1 states input 1e-4 5
+--    print $ map priorState (last iters)
+--    print $ length iters
     -- Costs
-    -- let costs = map totalCostsForPlayersPerIterationE1 iters
+    
+    let costs = map totalCostsForPlayersPerIterationE1 iters 
     -- print $ "Initial Cost = " ++ show (head costs)
-    -- print $ "Costs = " ++ show (last costs)
-
-
-    -- create animation
-    createAnimationWithIterations players iters
+    print costs
+    -- Create animation
+    -- createAnimationWithIterations players iters

@@ -3,7 +3,7 @@ module Example.Cost.ProximityCost where
 import Algorithm.Basic
 import Type.Player
 import Type.Index
-import Type.CostInfo
+import qualified Type.CostInfo as I
 import Type.Utilities
 
 
@@ -20,4 +20,4 @@ proximityCost' player egoPosition otherPositions = sum $ map (**2) costs
   where
       pairs = [(egoPosition, p2) | p2 <- otherPositions]
       costs = map (\(p1, p2) -> min (euclidDistance p1 p2 - prox) 0) pairs
-      prox = proximityC $ costInfo player
+      prox = I.proximity $ costInfo player

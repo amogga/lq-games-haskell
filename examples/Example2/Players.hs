@@ -1,125 +1,151 @@
 module Players where
 
+import Diagrams.Prelude (sRGB24read)
+import qualified Type.CostInfo as I
+import qualified Type.Weight as W
+import Type.Index
 import Type.Player
 import Type.Position
-import Type.CostInfo
-import Type.Weight
-import Type.Index
-import Diagrams.Prelude (sRGB24read)
 
-lane1 :: Floating a => [[a]]
-lane1 = [[-1,-10],[-1,1000]]
+lane1 :: (Floating a) => [[a]]
+lane1 = [[-1, -1000], [-1, 1000]]
 
-player1 :: Floating a => Player a 
-player1 = let 
-              -- state and input costs
-              costInfo1 = CostInfo1 { goalC = Position (6.0,35.0), 
-                                      polylineC = lane1, polylineBoundaryThresholdC = 1, 
-                                      minVelocityC = 0, maxVelocityC = 10, nominalVelocityC = 15,
-                                      proximityC = 5 
-                                    }
+player1 :: (Floating a) => Player a
+player1 =
+  let -- state and input costs
+      costInfo =
+        I.CostInfo3
+          { I.nominalVelocity = 15,
+            I.nominalHeading = pi / 2,
+            I.proximity = 1,
+            I.lane = lane1,
+            I.laneBoundary = 2.5
+          }
 
-              -- state and input weights
-              stateWeight1 = StateWeight1 { goalW = 4, 
-                                            polylineW = 25, polylineBoundaryW = 100, 
-                                            minVelocityW = 100, maxVelocityW = 100, nominalVelocityW = 10,
-                                            proximityW = 100
-                                          }
+      -- state and input weights
+      stateWeight =
+        W.StateWeight3
+          { W.nominalVelocity = 10,
+            W.nominalHeading = 10050,
+            W.proximity = 100,
+            W.lane = 100,
+            W.laneBoundary = 100
+          }
 
-              inputWeight1 = InputWeight1 { angularVelocityW = 25, 
-                                            accelerationW = 1 }
+      inputWeight =
+        W.InputWeight3
+          { W.angularVelocity = 10,
+            W.acceleration = 10
+          }
 
+      -- indices
+      stateIndex =
+        StateIndex1
+          { positionStateIndices = [0, 1],
+            psiStateIndex = 2,
+            velocityStateIndex = 3,
+            allPositionStateIndices = [[0, 1], [4, 5], [8, 9]]
+          }
+      inputIndex = InputIndex1 {angularVelocityInputIndex = 0, accelerationInputIndex = 1}
+   in Car
+        { stateIndex = stateIndex,
+          inputIndex = inputIndex,
+          costInfo = costInfo,
+          stateWeight = stateWeight,
+          inputWeight = inputWeight,
+          color = sRGB24read "#cd5c5c"
+        }
 
-              -- indices
-              stateIndex1 = StateIndex1 { positionStateIndices = [0,1], 
-                                          psiStateIndex = 2,
-                                          velocityStateIndex = 3,
-                                          allPositionStateIndices = [[0,1],[4,5],[8,9]]
-                                        }
-              inputIndex1 = InputIndex1 { angularVelocityInputIndex = 0, accelerationInputIndex = 1 }
-              
-              in Car { 
-                      stateIndex = stateIndex1,
-                      inputIndex = inputIndex1,
-                      costInfo = costInfo1,
-                      stateWeight = stateWeight1,
-                      inputWeight = inputWeight1,
-                      color = sRGB24read "#cd5c5c"                   
-                  }
-              
+player2 :: (Floating a) => Player a
+player2 =
+  let costInfo =
+        I.CostInfo3
+          { I.nominalVelocity = 10,
+            I.nominalHeading = pi / 2,
+            I.proximity = 1,
+            I.lane = lane1,
+            I.laneBoundary = 2.5
+          }
 
-player2 :: Floating a => Player a 
-player2 = let 
-              -- state and input costs
-              costInfo1 = CostInfo1 { goalC = Position (12,12), 
-                                      polylineC = [[2.0,100.0],[2.0,18.0],[2.5,15.0],[3.0,14.0],[5.0,12.5],[8.0,12.0],[100.0,12.0]], polylineBoundaryThresholdC = 1, 
-                                      maxVelocityC = 10, minVelocityC = 0, nominalVelocityC = 10,
-                                      proximityC = 5
-                                    }
+      -- state and input weights
+      stateWeight =
+        W.StateWeight3
+          { W.nominalVelocity = 1,
+            W.nominalHeading = 150,
+            W.proximity = 100,
+            W.lane = 100,
+            W.laneBoundary = 100
+          }
 
-              -- state and input weights
-              stateWeight1 = StateWeight1 { goalW = 3, 
-                                            polylineW = 25, polylineBoundaryW = 100, 
-                                            maxVelocityW = 100, minVelocityW = 100, nominalVelocityW = 1, 
-                                            proximityW = 100 
-                                          }
+      inputWeight =
+        W.InputWeight3
+          { W.angularVelocity = 10,
+            W.acceleration = 10
+          }
 
-              inputWeight1 = InputWeight1 { angularVelocityW = 25, 
-                                            accelerationW = 1 
-                                          }       
-              
-              -- indices
-              stateIndex1 = StateIndex1 { positionStateIndices = [4,5], 
-                                          psiStateIndex = 6, 
-                                          velocityStateIndex = 7,
-                                          allPositionStateIndices = [[0,1],[4,5],[8,9]]
-                                        }
-              inputIndex1 = InputIndex1 { angularVelocityInputIndex = 2, 
-                                          accelerationInputIndex = 3 
-                                        }
+      -- indices
+      stateIndex =
+        StateIndex1
+          { positionStateIndices = [4, 5],
+            psiStateIndex = 6,
+            velocityStateIndex = 7,
+            allPositionStateIndices = [[0, 1], [4, 5], [8, 9]]
+          }
+      inputIndex =
+        InputIndex1
+          { angularVelocityInputIndex = 2,
+            accelerationInputIndex = 3
+          }
+   in Car
+        { stateIndex = stateIndex,
+          inputIndex = inputIndex,
+          costInfo = costInfo,
+          stateWeight = stateWeight,
+          inputWeight = inputWeight,
+          color = sRGB24read "#40826D"
+        }
 
+player3 :: (Floating a) => Player a
+player3 =
+  let costInfo =
+        I.CostInfo3
+          { I.nominalVelocity = 10,
+            I.nominalHeading = pi / 2,
+            I.proximity = 1,
+            I.lane = [[2.5, -1000.0], [2.5, 1000.0]],
+            I.laneBoundary = 2.5
+          }
 
-            in Car { 
-                    stateIndex = stateIndex1,
-                    inputIndex = inputIndex1,
-                    costInfo = costInfo1,
-                    stateWeight = stateWeight1,
-                    inputWeight = inputWeight1,
-                    color = sRGB24read "#40826D"                        
-                }
+      -- state and input weights
+      stateWeight =
+        W.StateWeight3
+          { W.nominalVelocity = 1,
+            W.nominalHeading = 150,
+            W.proximity = 100,
+            W.lane = 100,
+            W.laneBoundary = 100
+          }
 
-bicycle :: Floating a => Player a 
-bicycle = let 
-              -- state and input costs
-              costInfo1 = CostInfo2 { goalC = Position (15,21), 
-                                      maxVelocityC = 8, minVelocityC = 0, nominalVelocityC = 10,
-                                      proximityC = 5
-                                    }
+      inputWeight = W.InputWeight3 {W.angularVelocity = 10, W.acceleration = 10}
 
-              -- state and input weights
-              stateWeight1 = StateWeight2 { goalW = 1, 
-                                            maxVelocityW = 100, minVelocityW = 100, nominalVelocityW = 1, 
-                                            proximityW = 100 
-                                          }
-              inputWeight1 = InputWeight2 { steeringAngleW = 1, 
-                                            accelerationW = 1 
-                                          }
-
-              -- indices                               
-              inputIndex2 = InputIndex2 { steeringAngleInputIndex = 4, 
-                                          accelerationInputIndex = 5 
-                                        }
-              stateIndex2 = StateIndex1 { positionStateIndices = [8,9],
-                                          psiStateIndex = 10, 
-                                          velocityStateIndex = 11,
-                                          allPositionStateIndices = [[0,1],[4,5],[8,9]]
-                                        }
-
-            in Bicycle { 
-              stateIndex = stateIndex2,
-              inputIndex = inputIndex2,
-              costInfo = costInfo1,
-              stateWeight = stateWeight1,
-              inputWeight = inputWeight1,
-              color = sRGB24read "#6a5acd"                     
-            }
+      -- indices
+      inputIndex =
+        InputIndex1
+          { angularVelocityInputIndex = 4,
+            accelerationInputIndex = 5
+          }
+      stateIndex =
+        StateIndex1
+          { positionStateIndices = [8, 9],
+            psiStateIndex = 10,
+            velocityStateIndex = 11,
+            allPositionStateIndices = [[0, 1], [4, 5], [8, 9]]
+          }
+   in Car
+        { stateIndex = stateIndex,
+          inputIndex = inputIndex,
+          costInfo = costInfo,
+          stateWeight = stateWeight,
+          inputWeight = inputWeight,
+          color = sRGB24read "#6a5acd"
+        }

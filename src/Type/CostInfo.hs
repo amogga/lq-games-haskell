@@ -4,20 +4,27 @@ module Type.CostInfo (CostInfo(..)) where
 import Type.Position
 
 data CostInfo a = CostInfo1 {
-                        goalC :: Position a,
-                        polylineC :: [[a]],
-                        polylineBoundaryThresholdC :: a,
-                        maxVelocityC :: a,
-                        minVelocityC :: a,
-                        nominalVelocityC :: a,
-                        proximityC :: a
+                        goal :: Position a,
+                        lane :: [[a]],
+                        laneBoundary :: a,
+                        maxVelocity :: a,
+                        minVelocity :: a,
+                        nominalVelocity :: a,
+                        proximity :: a
                     } |
                     CostInfo2 {
-                        goalC :: Position a,
-                        maxVelocityC :: a,
-                        minVelocityC :: a,
-                        nominalVelocityC :: a,
-                        proximityC :: a
+                        goal :: Position a,
+                        maxVelocity :: a,
+                        minVelocity :: a,
+                        nominalVelocity :: a,
+                        proximity :: a
+                    } |
+                    CostInfo3 {
+                        nominalVelocity :: a,
+                        nominalHeading :: a,
+                        proximity :: a,
+                        lane :: [[a]],
+                        laneBoundary :: a
                     } deriving (Show, Eq)
 
 
@@ -26,3 +33,5 @@ instance Functor CostInfo where
     CostInfo1 (fmap f goal) (map (map f) polyline) (f threshold) (f maxVel) (f minVel) (f nomVel) (f prox)
   fmap f (CostInfo2 goal maxVel minVel nomVel prox) =
     CostInfo2 (fmap f goal) (f maxVel) (f minVel) (f nomVel) (f prox)
+  fmap f (CostInfo3 nomVel nomHeading prox lane laneBound) =
+    CostInfo3 (f nomVel) (f nomHeading) (f prox) (map (map f) lane) (f laneBound)

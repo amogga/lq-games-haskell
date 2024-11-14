@@ -35,3 +35,13 @@ createAnimationWithIterations players iters = do
     let iterationCount = length iters
     mapM_ (\it -> createPNGPlot players ("plot_iter" ++ show it) it (iters !! it)) [0..iterationCount-1]
     createAnimation "./plots/iterations/plot_iter" iterationCount "./plots/animation.gif"
+
+
+createAnimationWithIteration :: [Player Double] -> [StateControlData] -> IO ()
+createAnimationWithIteration players iter = do
+    ensureDirectoryExists "./plots/simulation"
+    deleteAllFilesInDir "./plots/simulation"
+
+    let horizonCount = length iter
+    mapM_ (\it -> createSimulationPNGPlot players ("plot_iter" ++ show it) (take (it+1) iter)) [0..horizonCount-1]
+    createAnimation "./plots/iterations/plot_iter" horizonCount "./plots/animation.gif"

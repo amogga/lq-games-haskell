@@ -24,9 +24,9 @@ quadratizeCosts tcost players stateControlPair = LinearMultiSystemCosts qs ls rs
 quadratizeCostsForPlayer :: CostFunctionType -> Player R -> Vector R -> Vector R -> LinearSystemCosts
 quadratizeCostsForPlayer tcost player x u = LinearSystemCosts qs ls rs
   where
-    qs = matrix (size x) $ concat $ stateHessian tcost player states inputs
-    ls = vector $ stateGradient tcost player states inputs
-    ar = matrix (size u) $ concat $ inputHessian tcost player states inputs
+    qs = matrix (size x) $ map convertNaNZero $ concat $ stateHessian tcost player states inputs
+    ls = vector $ map convertNaNZero $ stateGradient tcost player states inputs
+    ar = matrix (size u) $ map convertNaNZero $ concat $ inputHessian tcost player states inputs
     -- FIXME: make more general
     rs = map (\(a,b) -> ar ?? (Range a 1 b, Range a 1 b)) [(0,1),(2,3),(4,5)]
 
@@ -43,4 +43,4 @@ inputHessian :: CostFunctionType -> Player Double -> [Double] -> [Double] -> [[D
 inputHessian totCost player states = hessian (totCost (fmap auto player) (map auto states))
 
 
-
+convertNaNZero v = if isNaN v then 0 else v

@@ -32,6 +32,7 @@ library
       Dynamics.Models
       Dynamics.MultiModels
       Example.Cost.GoalCost
+      Example.Cost.HeadingCost
       Example.Cost.LaneCost
       Example.Cost.ProximityCost
       Example.Cost.VelocityCost

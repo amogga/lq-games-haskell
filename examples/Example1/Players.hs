@@ -2,30 +2,30 @@ module Players where
 
 import Type.Player
 import Type.Position
-import Type.CostInfo
-import Type.Weight
 import Type.Index
+import qualified Type.CostInfo as I
+import qualified Type.Weight as W
 import Diagrams.Prelude (sRGB24read)
 
 
 player1 :: Floating a => Player a
 player1 = let
               -- state and input costs
-              costInfo1 = CostInfo1 { goalC = Position (6.0,35.0),
-                                      polylineC = [[6.0,-100.0],[6.0,100.0]], polylineBoundaryThresholdC = 1,
-                                      minVelocityC = 0, maxVelocityC = 10, nominalVelocityC = 8,
-                                      proximityC = 2
+              costInfo1 = I.CostInfo1 { I.goal = Position (6.0,35.0),
+                                      I.lane = [[6.0,-100.0],[6.0,100.0]], I.laneBoundary = 1,
+                                      I.minVelocity = 0, I.maxVelocity = 10, I.nominalVelocity = 8,
+                                      I.proximity = 2
                                     }
 
               -- state and input weights
-              stateWeight1 = StateWeight1 { goalW = 4,
-                                            polylineW = 50, polylineBoundaryW = 50,
-                                            minVelocityW = 100, maxVelocityW = 100, nominalVelocityW = 0,
-                                            proximityW = 100
+              stateWeight1 = W.StateWeight1 { W.goal = 4,
+                                            W.lane = 50, W.laneBoundary = 50,
+                                            W.minVelocity = 100, W.maxVelocity = 100, W.nominalVelocity = 0,
+                                            W.proximity = 100
                                           }
 
-              inputWeight1 = InputWeight1 { angularVelocityW = 25,
-                                            accelerationW = 1 }
+              inputWeight1 = W.InputWeight1 { W.angularVelocity = 25,
+                                            W.acceleration = 1 }
 
 
               -- indices
@@ -51,21 +51,21 @@ player1 = let
 player2 :: Floating a => Player a
 player2 = let
               -- state and input costs
-              costInfo1 = CostInfo1 { goalC = Position (12,12),
-                                      polylineC = [[2.0,100.0],[2.0,18.0],[2.5,15.0],[3.0,14.0],[5.0,12.5],[8.0,12.0],[100.0,12.0]], polylineBoundaryThresholdC = 1,
-                                      minVelocityC = 0, maxVelocityC = 10, nominalVelocityC = 5,
-                                      proximityC = 2
+              costInfo1 = I.CostInfo1 { I.goal = Position (12,12),
+                                      I.lane = [[2.0,100.0],[2.0,18.0],[2.5,15.0],[3.0,14.0],[5.0,12.5],[8.0,12.0],[100.0,12.0]], I.laneBoundary = 1,
+                                      I.minVelocity = 0, I.maxVelocity = 10, I.nominalVelocity = 5,
+                                      I.proximity = 2
                                     }
 
               -- state and input weights
-              stateWeight1 = StateWeight1 { goalW = 4,
-                                            polylineW = 50, polylineBoundaryW = 50,
-                                            maxVelocityW = 100, minVelocityW = 100, nominalVelocityW = 0,
-                                            proximityW = 100
+              stateWeight1 = W.StateWeight1 { W.goal = 4,
+                                            W.lane = 50, W.laneBoundary = 50,
+                                            W.maxVelocity = 100, W.minVelocity = 100, W.nominalVelocity = 0,
+                                            W.proximity = 100
                                           }
 
-              inputWeight1 = InputWeight1 { angularVelocityW = 25,
-                                            accelerationW = 1
+              inputWeight1 = W.InputWeight1 { W.angularVelocity = 25,
+                                            W.acceleration = 1
                                           }
 
               -- indices
@@ -91,18 +91,18 @@ player2 = let
 bicycle :: Floating a => Player a
 bicycle = let
               -- state and input costs
-              costInfo1 = CostInfo2 { goalC = Position (15,21),
-                                      minVelocityC = 0, maxVelocityC = 10, nominalVelocityC = 4,
-                                      proximityC = 1
+              costInfo1 = I.CostInfo2 { I.goal = Position (15,21),
+                                      I.minVelocity = 0, I.maxVelocity = 10, I.nominalVelocity = 4,
+                                      I.proximity = 1
                                     }
 
               -- state and input weights
-              stateWeight1 = StateWeight2 { goalW = 1,
-                                            maxVelocityW = 100, minVelocityW = 100, nominalVelocityW = 0,
-                                            proximityW = 100
+              stateWeight1 = W.StateWeight2 { W.goal = 1,
+                                            W.maxVelocity = 100, W.minVelocity = 100, W.nominalVelocity = 0,
+                                            W.proximity = 100
                                           }
-              inputWeight1 = InputWeight2 { steeringAngleW = 1,
-                                            accelerationW = 1
+              inputWeight1 = W.InputWeight2 { W.steeringAngle = 1,
+                                            W.acceleration = 1
                                           }
 
               -- indices

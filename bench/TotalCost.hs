@@ -5,61 +5,62 @@ import Example.Cost.LaneCost
 import Example.Cost.VelocityCost
 import Example.Cost.ProximityCost
 import Type.Player
-import Type.Weight
+import qualified Type.Weight as W
 import Type.Index
 
 
 totalCost :: (Floating a, Ord a) => Player a -> [a] -> [a] -> a
 totalCost player states input =
   let 
-      goalCostP = goalCostFromStates player states
-      proximityP = proximityCost player states
-      maxVelCost = maximumVelocityCost player states
-      minVelCost = minimumVelocityCost player states
+      goalCostVal = goalCostFromStates player states
+      proximityVal = proximityCost player states
+      maxVelCostVal = maximumVelocityCost player states
+      minVelCostVal = minimumVelocityCost player states
   in
 
   case player of
-    (Car _ _ _ stateWeightCar inputWeightCar _) -> 
+    (Car stateIdx inputIdx _ stateWeightCar inputWeightCar _) -> 
 
-                                           let polylineCostP =  polylineCost player states
-                                               polylineBoundaryCostP = polylineBoundaryCost player states
-                                               angularVelocityCostP = input !! angularVelocityInputIndex (inputIndex player)
-                                               accelerationCostP = input !! accelerationInputIndex (inputIndex player)
+                                           let laneCostVal =  laneCost player states
+                                               laneBoundaryCostVal = laneBoundaryCost player states
+                                               angularVelocityCostVal = input !! angularVelocityInputIndex inputIdx
+                                               accelerationCostVal = input !! accelerationInputIndex inputIdx
                                               in
-                                              -- progess
-                                              goalW stateWeightCar * goalCostP +
+                                              -- progress
+                                              W.goal stateWeightCar * goalCostVal +
 
                                               -- stay in lane
-                                              polylineW stateWeightCar * polylineCostP + polylineW stateWeightCar * polylineBoundaryCostP +
+                                              W.lane stateWeightCar * laneCostVal + W.lane stateWeightCar * laneBoundaryCostVal +
 
                                               -- adjust speed and keep within bounds: nominal, maximum and minimum speed
-                                              maxVelocityW stateWeightCar * maxVelCost + 
-                                              minVelocityW stateWeightCar * minVelCost +
+                                              W.maxVelocity stateWeightCar * maxVelCostVal + 
+                                              W.minVelocity stateWeightCar * minVelCostVal +
 
                                               -- avoid collisions with other road users
-                                              proximityW stateWeightCar * proximityP +
+                                              W.proximity stateWeightCar * proximityVal +
 
                                               -- penalize inputs: angular velocity and acceleration
-                                              angularVelocityW inputWeightCar * angularVelocityCostP ** 2 + 
-                                              accelerationW inputWeightCar * accelerationCostP ** 2
+                                              W.angularVelocity inputWeightCar * angularVelocityCostVal ** 2 + 
+                                              W.acceleration inputWeightCar * accelerationCostVal ** 2
 
-    (Bicycle _ _ _ stateWeightBicycle inputWeightBicycle _) -> 
+    (Bicycle stateIdx inputIdx _ stateWeightBicycle inputWeightBicycle _) -> 
                                             
-                                            let steeringAngleCostP = input !! steeringAngleInputIndex (inputIndex player)
-                                                accelerationCostP = input !! accelerationInputIndex (inputIndex player)
+                                            let steeringAngleCostVal = input !! steeringAngleInputIndex inputIdx 
+                                                accelerationCostVal = input !! accelerationInputIndex inputIdx
                                                
                                                in
 
-                                               -- progess
-                                                goalW stateWeightBicycle * goalCostP +
+                                               -- progress
+                                                W.goal stateWeightBicycle * goalCostVal +
 
                                                 -- adjust speed and keep within bounds: nominal, maximum and minimum speed
-                                                maxVelocityW stateWeightBicycle * maxVelCost + 
-                                                minVelocityW stateWeightBicycle * minVelCost +
+                                                W.maxVelocity stateWeightBicycle * maxVelCostVal + 
+                                                W.minVelocity stateWeightBicycle * minVelCostVal +
                                                 
                                                 -- avoid collisions with other road users
-                                                proximityW stateWeightBicycle * proximityP + 
+                                                W.proximity stateWeightBicycle * proximityVal + 
 
                                                 -- penalize inputs: steering angle and acceleration
-                                                steeringAngleW inputWeightBicycle * steeringAngleCostP ** 2 + 
-                                                accelerationW inputWeightBicycle * accelerationCostP ** 2
+                                                W.steeringAngle inputWeightBicycle * steeringAngleCostVal ** 2 + 
+                                                W.acceleration inputWeightBicycle * accelerationCostVal ** 2
+

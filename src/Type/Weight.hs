@@ -3,20 +3,20 @@ module Type.Weight (StateWeight(..),InputWeight(..)) where
 
 data StateWeight a = 
             StateWeight1 { 
-                goalW :: a,
-                polylineW :: a,
-                polylineBoundaryW :: a,
-                maxVelocityW :: a,
-                minVelocityW :: a,
-                nominalVelocityW :: a,
-                proximityW :: a
+                goal :: a,
+                lane :: a,
+                laneBoundary :: a,
+                maxVelocity :: a,
+                minVelocity :: a,
+                nominalVelocity :: a,
+                proximity :: a
             } |
             StateWeight2 {
-                goalW :: a,
-                maxVelocityW :: a,
-                minVelocityW :: a,
-                nominalVelocityW :: a,
-                proximityW :: a
+                goal :: a,
+                maxVelocity :: a,
+                minVelocity :: a,
+                nominalVelocity :: a,
+                proximity :: a
             } |
             StateWeight3 {
                 nominalVelocity:: a,
@@ -28,15 +28,15 @@ data StateWeight a =
 
 data InputWeight a = 
             InputWeight1 { 
-                angularVelocityW :: a,
-                accelerationW :: a
+                angularVelocity :: a,
+                acceleration :: a
             } |
             InputWeight2 {
-                steeringAngleW :: a,
-                accelerationW :: a
+                steeringAngle :: a,
+                acceleration :: a
             } |
             InputWeight3 {
-                angularVelocity:: a,
+                angularVelocity :: a,
                 acceleration :: a  
             } deriving (Show, Eq)
 

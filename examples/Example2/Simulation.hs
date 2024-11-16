@@ -15,6 +15,9 @@ import Type.Simulation
 simParamsHorizon :: SimulationParameters
 simParamsHorizon = SimulationParametersWithHorizon { iterationCount = 60, sample = 0.25, horizon = 20}
 
+simParamsMaxT :: SimulationParameters
+simParamsMaxT = SimulationParametersWithMaxTime {iterationCount = 60, sample = 0.25, maxTime = 5}
+
 initState :: Vector R
 initState = vector [2.5, -10, pi / 2.0 , 5.0,
                    -1, -10, pi / 2.0, 5.0,
@@ -32,7 +35,10 @@ quadratizeCostsE = quadratizeCosts totalCost players
 quadratizeCostsForPlayerE :: Player R -> Vector R -> Vector R -> LinearSystemCosts
 quadratizeCostsForPlayerE = quadratizeCostsForPlayer totalCost
 
-runSimulationWithIterationAndHorizonE :: Vector R -> Vector R -> SimulationParameters -> [[StateControlData]]
+runSimulationWithIterationAndMaxTimeE :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
+runSimulationWithIterationAndMaxTimeE = runSimulationWithIterationAndMaxTime totalCost players
+
+runSimulationWithIterationAndHorizonE :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
 runSimulationWithIterationAndHorizonE = runSimulationWithIterationAndHorizon totalCost players
 
 totalCostsForPlayersPerIterationE :: [StateControlData] -> [R]

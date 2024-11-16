@@ -25,10 +25,16 @@ import Type.Simulation
 --         condition x = norm_2 (responseState (nextVal x) - priorState (nextVal x)) ** 2 > tolerance
 --         nextVal x = last $ overallSolver totcost players x sample
 
-runSimulationWithIterationAndHorizon :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> SimulationParameters -> [[StateControlData]]
-runSimulationWithIterationAndHorizon totcost players states input (SimulationParametersWithHorizon iterationsCount sample horizon) =  take (iterationsCount + 1) $ iterate (overallSolver totcost players sample) stateControlPairs
+runSimulationWithIterationAndMaxTime :: CostFunctionType -> [Player R] -> SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
+runSimulationWithIterationAndMaxTime totcost players (SimulationParametersWithMaxTime iterationsCount sample maxtime) = runSimulationWithIterationAndHorizon totcost players (SimulationParametersWithHorizon iterationsCount sample horizon)
+  where
+    horizon = floor (maxtime/sample)
+
+runSimulationWithIterationAndHorizon :: CostFunctionType -> [Player R] -> SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
+runSimulationWithIterationAndHorizon totcost players (SimulationParametersWithHorizon iterationsCount sample horizon) states input =  take (iterationsCount + 1) $ iterate (overallSolver totcost players sample) stateControlPairs
     where
         stateControlPairs = generateInitialStateControlPairs states input sample horizon
+runSimulationWithIterationAndHorizon _ _ _ _ _ = error "Invalid arguments"
 
 overallSolver :: CostFunctionType -> [Player R] -> Double -> [StateControlData] -> [StateControlData]
 overallSolver totcost players sample statesInput = controlStateResponseSolver sample initialState statesInput pAndAlpha

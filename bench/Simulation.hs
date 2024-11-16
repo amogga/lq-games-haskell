@@ -16,8 +16,11 @@ players = [player1, player2, bicycle]
 quadratizeCostsE :: StateControlData -> LinearMultiSystemCosts
 quadratizeCostsE = quadratizeCosts totalCost players
 
-runSimulationWithIterationAndHorizonE :: Vector R -> Vector R -> SimulationParameters -> [[StateControlData]]
+runSimulationWithIterationAndHorizonE :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
 runSimulationWithIterationAndHorizonE = runSimulationWithIterationAndHorizon totalCost players
+
+runSimulationWithIterationAndMaxTimeE :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
+runSimulationWithIterationAndMaxTimeE = runSimulationWithIterationAndMaxTime totalCost players
 
 totalCostsForPlayersPerIterationE :: [StateControlData] -> [R]
 totalCostsForPlayersPerIterationE = totalCostsForPlayersPerIteration totalCost players

@@ -50,6 +50,7 @@ library
       Type.Plot
       Type.Position
       Type.Quadratization
+      Type.Simulation
       Type.Utilities
       Type.Weight
   other-modules:

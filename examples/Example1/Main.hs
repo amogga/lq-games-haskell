@@ -5,7 +5,8 @@ import Simulation
 main :: IO ()
 main = do
     -- run simulation
-    let iters = runSimulationWithIterationAndHorizonE1 initState initInput 50 0.1 50
+    
+    let iters = runSimulationWithIterationAndHorizonE1 initState initInput simParamsHorizon
 
     -- compute costs per iteration
     let costs = map totalCostsForPlayersPerIterationE1 iters

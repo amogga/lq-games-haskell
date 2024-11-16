@@ -9,7 +9,11 @@ import Example.Utilities
 import TotalCost (totalCost)
 import Numeric.LinearAlgebra
 import Plot.CreateGifs
+import Type.Simulation
 
+
+simParamsHorizon :: SimulationParameters
+simParamsHorizon = SimulationParametersWithHorizon { iterationCount = 60, sample = 0.25, horizon = 20}
 
 initState :: Vector R
 initState = vector [2.5, -10, pi / 2.0 , 5.0,
@@ -28,7 +32,7 @@ quadratizeCostsE1 = quadratizeCosts totalCost players
 quadratizeCostsForPlayerE1 :: Player R -> Vector R -> Vector R -> LinearSystemCosts
 quadratizeCostsForPlayerE1 = quadratizeCostsForPlayer totalCost
 
-runSimulationWithIterationAndHorizonE1 :: Vector R -> Vector R -> Int -> R -> Int -> [[StateControlData]]
+runSimulationWithIterationAndHorizonE1 :: Vector R -> Vector R -> SimulationParameters -> [[StateControlData]]
 runSimulationWithIterationAndHorizonE1 = runSimulationWithIterationAndHorizon totalCost players
 
 totalCostsForPlayersPerIterationE1 :: [StateControlData] -> [R]

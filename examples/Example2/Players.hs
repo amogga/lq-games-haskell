@@ -10,6 +10,12 @@ import Type.Position
 lane1 :: (Floating a) => [[a]]
 lane1 = [[-1, -1000], [-1, 1000]]
 
+inputsIndices :: [[Int]]
+inputsIndices = [[0,1],[2,3],[4,5]]
+
+positionsIndices :: [[Int]]
+positionsIndices = [[0, 1], [4, 5], [8, 9]]
+
 player1 :: (Floating a) => Player a
 player1 =
   let -- state and input costs
@@ -44,9 +50,9 @@ player1 =
           { positionStateIndices = [0, 1],
             psiStateIndex = 2,
             velocityStateIndex = 3,
-            allPositionStateIndices = [[0, 1], [4, 5], [8, 9]]
+            allPositionStateIndices = positionsIndices
           }
-      inputIndex = InputIndex1 {angularVelocityInputIndex = 0, accelerationInputIndex = 1}
+      inputIndex = InputIndex1 {angularVelocityInputIndex = 0, accelerationInputIndex = 1, allInputs = inputsIndices}
    in Car
         { stateIndex = stateIndex,
           inputIndex = inputIndex,
@@ -89,12 +95,13 @@ player2 =
           { positionStateIndices = [4, 5],
             psiStateIndex = 6,
             velocityStateIndex = 7,
-            allPositionStateIndices = [[0, 1], [4, 5], [8, 9]]
+            allPositionStateIndices = positionsIndices
           }
       inputIndex =
         InputIndex1
           { angularVelocityInputIndex = 2,
-            accelerationInputIndex = 3
+            accelerationInputIndex = 3,
+            allInputs = inputsIndices
           }
    in Car
         { stateIndex = stateIndex,
@@ -132,14 +139,15 @@ player3 =
       inputIndex =
         InputIndex1
           { angularVelocityInputIndex = 4,
-            accelerationInputIndex = 5
+            accelerationInputIndex = 5,
+            allInputs = inputsIndices
           }
       stateIndex =
         StateIndex1
           { positionStateIndices = [8, 9],
             psiStateIndex = 10,
             velocityStateIndex = 11,
-            allPositionStateIndices = [[0, 1], [4, 5], [8, 9]]
+            allPositionStateIndices = positionsIndices
           }
    in Car
         { stateIndex = stateIndex,

@@ -3,11 +3,13 @@ module Type.Index(InputIndex(..),StateIndex(..)) where
 
 data InputIndex = InputIndex1 {
                     angularVelocityInputIndex :: Int,
-                    accelerationInputIndex :: Int
+                    accelerationInputIndex :: Int,
+                    allInputs :: [[Int]]
                 } | 
                 InputIndex2 {
                     steeringAngleInputIndex :: Int,      
-                    accelerationInputIndex :: Int
+                    accelerationInputIndex :: Int,
+                    allInputs :: [[Int]]
                 } deriving (Show, Eq)
 
 data StateIndex = StateIndex1 {

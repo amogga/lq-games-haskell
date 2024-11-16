@@ -13,11 +13,11 @@ import Type.Simulation
 players :: Floating a => [Player a]
 players = [player1, player2, bicycle]
 
-quadratizeCostsE1 :: StateControlData -> LinearMultiSystemCosts
-quadratizeCostsE1 = quadratizeCosts totalCost players
+quadratizeCostsE :: StateControlData -> LinearMultiSystemCosts
+quadratizeCostsE = quadratizeCosts totalCost players
 
-runSimulationWithIterationAndHorizonE1 :: Vector R -> Vector R -> SimulationParameters -> [[StateControlData]]
-runSimulationWithIterationAndHorizonE1 = runSimulationWithIterationAndHorizon totalCost players
+runSimulationWithIterationAndHorizonE :: Vector R -> Vector R -> SimulationParameters -> [[StateControlData]]
+runSimulationWithIterationAndHorizonE = runSimulationWithIterationAndHorizon totalCost players
 
-totalCostsForPlayersPerIterationE1 :: [StateControlData] -> [R]
-totalCostsForPlayersPerIterationE1 = totalCostsForPlayersPerIteration totalCost players
+totalCostsForPlayersPerIterationE :: [StateControlData] -> [R]
+totalCostsForPlayersPerIterationE = totalCostsForPlayersPerIteration totalCost players

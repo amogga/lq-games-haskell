@@ -5,10 +5,10 @@ import Simulation
 main :: IO ()
 main = do
     -- run simulation
-    let iters = runSimulationWithIterationAndHorizonE1 initState initInput simParamsHorizon
+    let iters = runSimulationWithIterationAndHorizonE initState initInput simParamsHorizon
 
     -- compute costs per iteration
-    let costs = map totalCostsForPlayersPerIterationE1 iters
+    let costs = map totalCostsForPlayersPerIterationE iters
     print $ last costs
 
     -- create animation

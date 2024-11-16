@@ -33,11 +33,11 @@ quadratizeCostsE1 = quadratizeCosts totalCost players
 -- runSimulationWithTerminationE1 :: Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
 -- runSimulationWithTerminationE1 = runSimulationWithTermination totalCost players
 
-runSimulationWithIterationAndHorizonE1 :: Vector R -> Vector R -> SimulationParameters -> [[StateControlData]]
-runSimulationWithIterationAndHorizonE1 = runSimulationWithIterationAndHorizon totalCost players
+runSimulationWithIterationAndHorizonE :: Vector R -> Vector R -> SimulationParameters -> [[StateControlData]]
+runSimulationWithIterationAndHorizonE = runSimulationWithIterationAndHorizon totalCost players
 
-totalCostsForPlayersPerIterationE1 :: [StateControlData] -> [R]
-totalCostsForPlayersPerIterationE1 = totalCostsForPlayersPerIteration totalCost players
+totalCostsForPlayersPerIterationE :: [StateControlData] -> [R]
+totalCostsForPlayersPerIterationE = totalCostsForPlayersPerIteration totalCost players
 
 createAnimationOfEquilibriumE :: [StateControlData] -> IO ()
 createAnimationOfEquilibriumE = createAnimationWithIteration "./examples/Example1" players

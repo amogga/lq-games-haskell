@@ -26,17 +26,17 @@ initInput = vector [0,0,0,0,0,0]
 players :: Floating a => [Player a]
 players = [player1, player2, player3]
 
-quadratizeCostsE1 :: StateControlData -> LinearMultiSystemCosts
-quadratizeCostsE1 = quadratizeCosts totalCost players
+quadratizeCostsE :: StateControlData -> LinearMultiSystemCosts
+quadratizeCostsE = quadratizeCosts totalCost players
 
-quadratizeCostsForPlayerE1 :: Player R -> Vector R -> Vector R -> LinearSystemCosts
-quadratizeCostsForPlayerE1 = quadratizeCostsForPlayer totalCost
+quadratizeCostsForPlayerE :: Player R -> Vector R -> Vector R -> LinearSystemCosts
+quadratizeCostsForPlayerE = quadratizeCostsForPlayer totalCost
 
-runSimulationWithIterationAndHorizonE1 :: Vector R -> Vector R -> SimulationParameters -> [[StateControlData]]
-runSimulationWithIterationAndHorizonE1 = runSimulationWithIterationAndHorizon totalCost players
+runSimulationWithIterationAndHorizonE :: Vector R -> Vector R -> SimulationParameters -> [[StateControlData]]
+runSimulationWithIterationAndHorizonE = runSimulationWithIterationAndHorizon totalCost players
 
-totalCostsForPlayersPerIterationE1 :: [StateControlData] -> [R]
-totalCostsForPlayersPerIterationE1 = totalCostsForPlayersPerIteration totalCost players
+totalCostsForPlayersPerIterationE :: [StateControlData] -> [R]
+totalCostsForPlayersPerIterationE = totalCostsForPlayersPerIteration totalCost players
 
 createAnimationOfEquilibriumE :: [StateControlData] -> IO ()
 createAnimationOfEquilibriumE = createAnimationWithIteration "./examples/Example2" players

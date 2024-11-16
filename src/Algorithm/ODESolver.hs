@@ -3,14 +3,13 @@ module Algorithm.ODESolver (nonlinearDynamicsSolve) where
 import Dynamics.MultiModels
 import Numeric.LinearAlgebra
 
-nonlinearDynamicsSolve :: Vector R -> Vector R -> Vector R
-nonlinearDynamicsSolve = rk4Solve nonlinearDynamics
+nonlinearDynamicsSolve :: Vector R -> Vector R -> R -> Vector R
+nonlinearDynamicsSolve = rk4Solve nonlinearDynamics 
 
-rk4Solve :: (Vector R -> Vector R -> Vector R) -> Vector R -> Vector R -> Vector R
-rk4Solve stateFnc x u = last $ take (n + 1) $ iterate (\xs -> rungeKutta4MethodInstance stateFnc xs u h) x
-  where h = t / fromIntegral n
+rk4Solve :: (Vector R -> Vector R -> Vector R) -> Vector R -> Vector R -> R  -> Vector R
+rk4Solve stateFnc x u instant = last $ take (n + 1) $ iterate (\xs -> rungeKutta4MethodInstance stateFnc xs u h) x
+  where h = instant / fromIntegral n
         n = 10
-        t = 0.25
 
 rungeKutta4MethodInstance :: (Vector R -> Vector R -> Vector R) -> Vector R -> Vector R -> R -> Vector R
 rungeKutta4MethodInstance stateFnc x u h = x + xns

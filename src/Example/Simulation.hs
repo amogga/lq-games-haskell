@@ -17,44 +17,42 @@ import Algorithm.ODESolver
 import Type.Quadratization
 
 -- simulation maximum iteration returns (maxIter + 1) array length because the array contains the initial value
-runSimulationWithTermination :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
-runSimulationWithTermination totcost players states input tolerance maxIteration =  take (maxIteration+1) $ takeWhile condition $ iterate (overallSolver totcost players) stateControlPairs
-    where
-        horizon = 20
-        stateControlPairs = generateInitialStateControlPairs states input horizon
-        condition x = norm_2 (responseState (nextVal x) - priorState (nextVal x)) ** 2 > tolerance
-        nextVal x = last $ overallSolver totcost players x
+-- runSimulationWithTermination :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> Double -> Int -> R -> Int -> [[StateControlData]]
+-- runSimulationWithTermination totcost players states input tolerance maxIteration sample horizon =  take (maxIteration+1) $ takeWhile condition $ iterate (\xu -> overallSolver totcost players xu sample) stateControlPairs
+--     where
+--         stateControlPairs = generateInitialStateControlPairs states input sample horizon
+--         condition x = norm_2 (responseState (nextVal x) - priorState (nextVal x)) ** 2 > tolerance
+--         nextVal x = last $ overallSolver totcost players x sample
 
-runSimulationWithIteration :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> Int -> [[StateControlData]]
-runSimulationWithIteration totcost players states input iterationsCount =  take (iterationsCount + 1) $ iterate (overallSolver totcost players) stateControlPairs
+runSimulationWithIterationAndHorizon :: CostFunctionType -> [Player R] -> Vector R -> Vector R -> Int -> R -> Int -> [[StateControlData]]
+runSimulationWithIterationAndHorizon totcost players states input iterationsCount sample horizon =  take (iterationsCount + 1) $ iterate (overallSolver totcost players sample) stateControlPairs
     where
-        horizon = 20
-        stateControlPairs = generateInitialStateControlPairs states input horizon
+        stateControlPairs = generateInitialStateControlPairs states input sample horizon
 
-overallSolver :: CostFunctionType -> [Player R] -> [StateControlData] -> [StateControlData]
-overallSolver totcost players statesInput = controlStateResponseSolver initialState statesInput pAndAlpha
+overallSolver :: CostFunctionType -> [Player R] -> Double -> [StateControlData] -> [StateControlData]
+overallSolver totcost players sample statesInput = controlStateResponseSolver sample initialState statesInput pAndAlpha
     where
-        pAndAlpha = lqGameSolverWStateControl totcost players statesInput
+        pAndAlpha = lqGameSolverWStateControl totcost players sample statesInput
         initialState = priorState $ head statesInput
 
-lqGameSolverWStateControl :: CostFunctionType -> [Player R] -> [StateControlData] -> [PAndAlpha]
-lqGameSolverWStateControl totCost players stateControlPair = lqGameSolver dynlist costslist
+lqGameSolverWStateControl :: CostFunctionType -> [Player R] -> Double -> [StateControlData] -> [PAndAlpha]
+lqGameSolverWStateControl totCost players sample stateControlPair = lqGameSolver dynlist costslist
     where 
-        dynlist = reverse $ map discreteLinearDynamicsVS1 stateControlPair
+        dynlist = reverse $ map (discreteLinearDynamics sample) stateControlPair
         costslist = reverse $ map (quadratizeCosts totCost players) stateControlPair
 
-computeControlStateStep :: StateControlData -> PAndAlpha -> State StateResponseSolverState StateControlData
-computeControlStateStep cspair pAndAlpha = do
+computeControlStateStep :: Double -> StateControlData -> PAndAlpha -> State StateResponseSolverState StateControlData
+computeControlStateStep sample cspair (PAndAlpha p alpha) = do
     x <- get
     let xref = priorState cspair
-    let uref = controlInput cspair
-    let PAndAlpha p alpha = pAndAlpha
-    let alphaScale = 0.1
+        uref = controlInput cspair
+        alphaScale = 0.1
 
     let u = reshape 1 uref - p <> (reshape 1 x - reshape 1 xref) - scale alphaScale alpha
-    let xn = nonlinearDynamicsSolve x (flatten u)
+        xn = nonlinearDynamicsSolve x (flatten u) sample
+
     put xn
     return $ StateControlWResponse x (flatten u) xn
 
-controlStateResponseSolver :: Vector R -> [StateControlData] -> [PAndAlpha] -> [StateControlData]
-controlStateResponseSolver initialStates stateControlData pAndAlpha = evalState (zipWithM computeControlStateStep stateControlData pAndAlpha) initialStates
+controlStateResponseSolver :: Double -> Vector R -> [StateControlData] -> [PAndAlpha] -> [StateControlData]
+controlStateResponseSolver sample initialStates stateControlData pAndAlpha = evalState (zipWithM (computeControlStateStep sample) stateControlData pAndAlpha) initialStates

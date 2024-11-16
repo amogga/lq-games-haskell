@@ -9,10 +9,10 @@ import Data.List (transpose)
 import Algorithm.ODESolver
 import Type.Quadratization
 
-generateInitialStateControlPairs :: Vector R -> Vector R -> Int -> [StateControlData]
-generateInitialStateControlPairs states input horizon = zipWith StateControlPair initialOperatingPoints initialInputs
+generateInitialStateControlPairs :: Vector R -> Vector R -> R -> Int -> [StateControlData]
+generateInitialStateControlPairs states input sample horizon = zipWith StateControlPair initialOperatingPoints initialInputs
   where
-    initialOperatingPoints = take horizon $ iterate (`nonlinearDynamicsSolve` input) states
+    initialOperatingPoints = take horizon $ iterate (\x -> nonlinearDynamicsSolve x input sample) states
     initialInputs = replicate horizon input
 
 totalCostsForPlayersPerIteration :: CostFunctionType -> [Player R] -> [StateControlData] -> [R]

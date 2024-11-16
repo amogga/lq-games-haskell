@@ -37,11 +37,11 @@ createAnimationWithIterations players iters = do
     createAnimation "./plots/iterations/plot_iter" iterationCount "./plots/animation.gif"
 
 
-createAnimationWithIteration :: [Player Double] -> [StateControlData] -> IO ()
-createAnimationWithIteration players iter = do
-    ensureDirectoryExists "./plots/simulation"
-    deleteAllFilesInDir "./plots/simulation"
+createAnimationWithIteration :: String -> [Player Double] -> [StateControlData] -> IO ()
+createAnimationWithIteration filepath players iter = do
+    ensureDirectoryExists $ filepath ++ "/plots/simulation"
+    deleteAllFilesInDir $ filepath ++ "/plots/simulation"
 
     let horizonCount = length iter
-    mapM_ (\it -> createSimulationPNGPlot players ("plot_iter" ++ show it) (take (it+1) iter)) [0..horizonCount-1]
-    createAnimation "./plots/iterations/plot_iter" horizonCount "./plots/animation.gif"
+    mapM_ (\it -> createSimulationPNGPlot filepath players ("plot_instant" ++ show it) (take (it+1) iter)) [0..horizonCount-1]
+    createAnimation (filepath ++ "/plots/simulation/plot_instant") horizonCount (filepath ++ "/plots/animation.gif")

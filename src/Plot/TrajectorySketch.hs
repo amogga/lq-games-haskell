@@ -73,8 +73,8 @@ createPlot pext players plotname iterationCount iterationData = do
 
     -- mapM_ (\ext -> renderCairo ("plots/iterations/" ++ plotname ++ "." ++ ext) (mkWidth 400) finalPlot) ["png","pdf"]
 
-createSimulationPlot :: PlotExtension -> [Player Double] -> String -> [StateControlData] -> IO ()
-createSimulationPlot pext players plotname iterationData = do
+createSimulationPlot :: PlotExtension -> String -> [Player Double] -> String -> [StateControlData] -> IO ()
+createSimulationPlot pext filepath players plotname iterationData = do
     let
         combinedPlot = mconcat $ map (`createDiagram` iterationData) players
         combinedCars = mconcat $ map (`createCar` iterationData) players
@@ -93,7 +93,7 @@ createSimulationPlot pext players plotname iterationData = do
         -- finalPlotv = view (p2 (1, 2) :: Point V2 Double) (p2 (3, 34) :: Point V2 Double) finalPlot
 
     -- renderCairo ("plots/iterations/" ++ plotname ++ extensionToString pext) (mkWidth 400) finalPlot
-    renderCairo ("plots/iterations/" ++ plotname ++ extensionToString pext) (mkSizeSpec2D (Just 300) (Just 600)) finalPlot
+    renderCairo (filepath ++ "/plots/simulation/" ++ plotname ++ extensionToString pext) (mkSizeSpec2D (Just 300) (Just 600)) finalPlot
 
     -- mapM_ (\ext -> renderCairo ("plots/iterations/" ++ plotname ++ "." ++ ext) (mkWidth 400) finalPlot) ["png","pdf"]
 
@@ -101,5 +101,5 @@ createSimulationPlot pext players plotname iterationData = do
 createPNGPlot :: [Player Double] -> String -> Int -> [StateControlData] -> IO ()
 createPNGPlot = createPlot PNGext
 
-createSimulationPNGPlot :: [Player Double] -> String -> [StateControlData] -> IO ()
+createSimulationPNGPlot :: String -> [Player Double] -> String -> [StateControlData] -> IO ()
 createSimulationPNGPlot = createSimulationPlot PNGext

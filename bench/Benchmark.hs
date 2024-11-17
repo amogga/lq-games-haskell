@@ -1,16 +1,19 @@
 module Main (main) where
 
 import Criterion.Main
-import Example.Quadratization
-import Numeric.LinearAlgebra
-import Type.Basic
-import Simulation (quadratizeCostsE)
+import Simulation
+import Criterion.Types (Config(jsonFile, reportFile, csvFile))
 
 main :: IO ()
-main = defaultMain [
-           bench "Total Costs" $ whnf quadratizeCostsE pairs
+main = do
+  let config = defaultConfig
+          { jsonFile = Just "bench/reports/report.json",
+            csvFile = Just "bench/reports/summary.csv",
+            reportFile = Just "bench/reports/report.html"
+        }
+          
+  defaultMainWith config [
+           bgroup "Equilibrium Convergence" [
+               bench "" $ whnf (runSimulationWithIterationAndHorizonT simParamsHorizon initState) initInput
+           ]
         ]
-        where
-            states = vector [6.5, 0.0, pi / 2.0, 1.0, 1.5, 40, -(pi / 2.0), 0.1, 0.0, 22.0, 0.0, 2.0]
-            input = vector [0,0,0,0,0,0]
-            pairs = StateControlPair states input

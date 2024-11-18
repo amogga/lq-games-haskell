@@ -19,7 +19,7 @@ totalCost player states input =
   in
 
   case player of
-    (Car stateIdx inputIdx _ stateWeightCar inputWeightCar _) -> 
+    (Car _ inputIdx _ stateWeightCar inputWeightCar _) -> 
 
                                            let laneCostVal =  laneCost player states
                                                laneBoundaryCostVal = laneBoundaryCost player states
@@ -43,7 +43,7 @@ totalCost player states input =
                                               W.angularVelocity inputWeightCar * angularVelocityCostVal ** 2 + 
                                               W.acceleration inputWeightCar * accelerationCostVal ** 2
 
-    (Bicycle stateIdx inputIdx _ stateWeightBicycle inputWeightBicycle _) -> 
+    (Bicycle _ inputIdx _ stateWeightBicycle inputWeightBicycle _) -> 
                                             
                                             let steeringAngleCostVal = input !! steeringAngleInputIndex inputIdx 
                                                 accelerationCostVal = input !! accelerationInputIndex inputIdx

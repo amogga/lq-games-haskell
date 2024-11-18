@@ -3,7 +3,7 @@
 {-# LANGUAGE RankNTypes #-}
 {-# HLINT ignore "Eta reduce" #-}
 
-module Example.Quadratization(quadratizeCosts, quadratizeCostsForPlayer) where
+module Example.Quadratization where
 
 import Numeric.LinearAlgebra
 import Type.Basic
@@ -35,6 +35,8 @@ quadratizeCostsForPlayer tcost player x u = LinearSystemCosts qs ls rs
 
     allInputs = ID.allInputs $ inputIndex player
 
+    convertNaNZero v = if isNaN v then 0 else v
+
 stateGradient :: CostFunctionType -> Player Double -> [Double] -> [Double] -> [Double]
 stateGradient totCost player states input = grad (\x -> totCost (fmap auto player) x (map auto input)) states
 
@@ -45,4 +47,4 @@ inputHessian :: CostFunctionType -> Player Double -> [Double] -> [Double] -> [[D
 inputHessian totCost player states = hessian (totCost (fmap auto player) (map auto states))
 
 
-convertNaNZero v = if isNaN v then 0 else v
+

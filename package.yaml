@@ -32,7 +32,6 @@ dependencies:
 - filepath
 - directory
 - process
-- deepseq
 
 ghc-options:
 - -Wall
@@ -105,6 +104,7 @@ executables:
     dependencies:
     - criterion
     - lq-games
+    - deepseq
 
 tests:
   lq-games-test:

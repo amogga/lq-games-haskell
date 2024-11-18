@@ -1,17 +1,13 @@
 {-# OPTIONS_GHC -Wno-partial-fields #-}
-{-# LANGUAGE DeriveAnyClass #-}
-{-# LANGUAGE DeriveGeneric #-}
 
 module Type.Basic where
 
 import Numeric.LinearAlgebra
-import GHC.Generics (Generic)
-import Control.DeepSeq (NFData)
 
 -- state and control data
 type StateResponseSolverState = Vector R
 data StateControlData = StateControlPair { priorState:: Vector R,  controlInput:: Vector R } | 
-                        StateControlWResponse {  priorState:: Vector R,  controlInput:: Vector R, responseState :: Vector R} deriving (Show, Generic, NFData)
+                        StateControlWResponse {  priorState:: Vector R,  controlInput:: Vector R, responseState :: Vector R} deriving (Show)
 
 -- linear multi player dynamics
 data LinearMultiSystemDynamics = LinearContinuousMultiSystemDynamics {systemMatrix :: Matrix R, inputMatrices :: [Matrix R]} | 

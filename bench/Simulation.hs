@@ -29,12 +29,11 @@ initInput = vector [0,0,
 players :: Floating a => [Player a]
 players = [player1, player2, bicycle]
 
-quadratizeCostsE :: StateControlData -> LinearMultiSystemCosts
-quadratizeCostsE = quadratizeCosts totalCost players
+quadratizeCostsT :: StateControlData -> LinearMultiSystemCosts
+quadratizeCostsT = quadratizeCosts totalCost players
 
 runSimulationWithIterationAndHorizonT :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
 runSimulationWithIterationAndHorizonT = runSimulationWithIterationAndHorizon totalCost players
-
 
 runSimulationWithIterationAndMaxTimeT :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
 runSimulationWithIterationAndMaxTimeT = runSimulationWithIterationAndMaxTime totalCost players

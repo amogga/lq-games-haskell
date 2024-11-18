@@ -22,7 +22,6 @@ data Player a = Car {
                   inputWeight :: InputWeight a,
                   color :: Colour Double
                 }
-                deriving (Show, Eq)
 
 instance Functor Player where
   fmap f (Car stateIdx inputIdx costInf stateWght inputWght col) =

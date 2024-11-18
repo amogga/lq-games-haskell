@@ -25,7 +25,7 @@ data CostInfo a = CostInfo1 {
                         proximity :: a,
                         lane :: [[a]],
                         laneBoundary :: a
-                    } deriving (Show, Eq)
+                    }
 
 
 instance Functor CostInfo where

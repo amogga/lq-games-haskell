@@ -10,11 +10,11 @@ data InputIndex = InputIndex1 {
                     steeringAngleInputIndex :: Int,      
                     accelerationInputIndex :: Int,
                     allInputs :: [[Int]]
-                } deriving (Show, Eq)
+                } 
 
 data StateIndex = StateIndex1 {
                     positionStateIndices:: [Int],
                     psiStateIndex :: Int,
                     velocityStateIndex:: Int,
                     allPositionStateIndices:: [[Int]]
-                } deriving (Show, Eq)
+                }

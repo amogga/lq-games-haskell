@@ -6,9 +6,6 @@ import Type.Position
 import Type.Index
 import Numeric.LinearAlgebra
 
-
-
-
 positionFromList :: [a] -> Maybe (Position a)
 positionFromList [x, y] = Just (Position (x, y))
 positionFromList _      = Nothing

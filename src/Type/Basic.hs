@@ -18,5 +18,5 @@ data LinearMultiSystemCosts = LinearMultiSystemCosts { statesHessians :: [Matrix
 data LinearSystemCosts = LinearSystemCosts { qMatrix :: Matrix R, lMatrix:: Vector R, rMatrices :: [Matrix R] } deriving (Show)
 
 -- types
-data LQGameState = LQGameState { z::[Matrix R], zeta::[Vector R] } deriving (Show)
+data LQGameState = LQGameState { z::[Matrix R], zeta::[Vector R] }
 data PAndAlpha = PAndAlpha { pMatrix :: Matrix R, alphaMatrix :: Matrix R} deriving (Show)

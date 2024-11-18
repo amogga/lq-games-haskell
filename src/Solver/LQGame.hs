@@ -47,7 +47,7 @@ computeP dynamics gameState s = p
     where
         p = case linearSolve s yp of
             Just x -> x
-            Nothing -> error "No solution found for the system"
+            Nothing -> error "No solution found for the system (p)"
         yp = fromBlocks [[tr (bs !! i) <> zs !! i <> a] | i <- [0..nplys-1]]
         nplys = length bs
         LinearDiscreteMultiSystemDynamics a bs _ = dynamics
@@ -58,7 +58,7 @@ computeAlpha dynamics gameState s = alpha
     where
         alpha = case linearSolve s yalpha of
             Just x -> x
-            Nothing -> error "No solution found for the system"
+            Nothing -> error "No solution found for the system (alpha)"
         yalpha = fromBlocks [[tr (bs !! i) <> reshape 1 (zts !! i)] | i <- [0..nplys-1]]
         nplys = length bs
         LinearDiscreteMultiSystemDynamics _ bs _ = dynamics

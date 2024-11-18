@@ -13,7 +13,8 @@ main = do
         }
           
   defaultMainWith config [
-           bgroup "Equilibrium Convergence" [
-               bench "" $ whnf (runSimulationWithIterationAndHorizonT simParamsHorizon initState) initInput
+            bgroup "LQ Solver" [
+              bench "Total Cost" $ nf quadratizeCostsT initPairs,
+              bench "Equilibrium" $ nf (runSimulationWithIterationAndMaxTimeT simParamsMaxT initState) initInput
            ]
         ]

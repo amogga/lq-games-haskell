@@ -63,6 +63,7 @@ library
   build-depends:
       ad >=4.5.6
     , base >=4.7 && <5
+    , deepseq
     , diagrams-cairo
     , diagrams-lib
     , directory
@@ -91,6 +92,7 @@ executable benchmark
       ad >=4.5.6
     , base >=4.7 && <5
     , criterion
+    , deepseq
     , diagrams-cairo
     , diagrams-lib
     , directory
@@ -119,6 +121,7 @@ executable example1
   build-depends:
       ad >=4.5.6
     , base >=4.7 && <5
+    , deepseq
     , diagrams-cairo
     , diagrams-lib
     , directory
@@ -147,6 +150,7 @@ executable example2
   build-depends:
       ad >=4.5.6
     , base >=4.7 && <5
+    , deepseq
     , diagrams-cairo
     , diagrams-lib
     , directory
@@ -163,6 +167,9 @@ executable example2
 executable example3
   main-is: Main.hs
   other-modules:
+      Players
+      Simulation
+      TotalCost
       Paths_lq_games
   autogen-modules:
       Paths_lq_games
@@ -172,6 +179,7 @@ executable example3
   build-depends:
       ad >=4.5.6
     , base >=4.7 && <5
+    , deepseq
     , diagrams-cairo
     , diagrams-lib
     , directory
@@ -197,6 +205,7 @@ executable example4
   build-depends:
       ad >=4.5.6
     , base >=4.7 && <5
+    , deepseq
     , diagrams-cairo
     , diagrams-lib
     , directory
@@ -218,10 +227,11 @@ executable lq-games-exe
       Paths_lq_games
   hs-source-dirs:
       app
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2 -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       ad >=4.5.6
     , base >=4.7 && <5
+    , deepseq
     , diagrams-cairo
     , diagrams-lib
     , directory
@@ -248,6 +258,7 @@ test-suite lq-games-test
   build-depends:
       ad >=4.5.6
     , base >=4.7 && <5
+    , deepseq
     , diagrams-cairo
     , diagrams-lib
     , directory

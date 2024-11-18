@@ -32,6 +32,7 @@ dependencies:
 - filepath
 - directory
 - process
+- deepseq
 
 ghc-options:
 - -Wall
@@ -52,7 +53,7 @@ executables:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
-    # - -O2
+    - -O2
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N

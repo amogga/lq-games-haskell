@@ -7,6 +7,8 @@ import qualified Type.CostInfo as I
 import qualified Type.Weight as W
 import Diagrams.Prelude (sRGB24read)
 
+inputsIndices :: [[Int]]
+inputsIndices = [[0,1],[2,3],[4,5]]
 
 player1 :: Floating a => Player a
 player1 = let
@@ -36,7 +38,9 @@ player1 = let
                                         }
 
               inputIndex1 = InputIndex1 { angularVelocityInputIndex = 0,
-                                          accelerationInputIndex = 1 }
+                                          accelerationInputIndex = 1,
+                                          allInputs = inputsIndices
+                                        }
 
               in Car {
                       stateIndex = stateIndex1,
@@ -75,7 +79,8 @@ player2 = let
                                           allPositionStateIndices = [[0,1],[4,5],[8,9]]
                                         }
               inputIndex1 = InputIndex1 { angularVelocityInputIndex = 2,
-                                          accelerationInputIndex = 3
+                                          accelerationInputIndex = 3,
+                                          allInputs = inputsIndices
                                         }
 
 
@@ -107,7 +112,8 @@ bicycle = let
 
               -- indices
               inputIndex2 = InputIndex2 { steeringAngleInputIndex = 4,
-                                          accelerationInputIndex = 5
+                                          accelerationInputIndex = 5,
+                                          allInputs = inputsIndices
                                         }
               stateIndex2 = StateIndex1 { positionStateIndices = [8,9],
                                           psiStateIndex = 10,

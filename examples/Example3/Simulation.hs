@@ -44,4 +44,4 @@ totalCostsForPlayersPerIterationE :: [StateControlData] -> [R]
 totalCostsForPlayersPerIterationE = totalCostsForPlayersPerIteration totalCost players
 
 createAnimationOfEquilibriumE :: [StateControlData] -> IO ()
-createAnimationOfEquilibriumE = createAnimationWithIteration "./examples/Example3" players
+createAnimationOfEquilibriumE = createAnimationWithGoalsAndIteration "./examples/Example3" players

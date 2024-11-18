@@ -30,12 +30,22 @@ createDiagram player iterationData = do
         playerinitPosition = tupleFromPosition $ positionOfPlayerFromStateControlData player (head iterationData)
         playerSpot = spot player playerinitPosition
 
-       -- playerGoal = goalSpot player
-
         positions = map (positionOfPlayerFromStateControlData player) iterationData
         diagram = plotCPosition positions (color player)
 
     diagram <> playerSpot
+
+createDiagramWithGoals :: Player Double -> [StateControlData] -> Diagram B
+createDiagramWithGoals player iterationData = do
+    let
+        playerinitPosition = tupleFromPosition $ positionOfPlayerFromStateControlData player (head iterationData)
+        playerSpot = spot player playerinitPosition
+
+        playerGoal = goalSpot player
+
+        positions = map (positionOfPlayerFromStateControlData player) iterationData
+        diagram = plotCPosition positions (color player)
+    diagram <> playerSpot <> playerGoal
 
 createCar :: Player Double -> [StateControlData] -> Diagram B
 createCar player iterationData = do
@@ -97,9 +107,36 @@ createSimulationPlot pext filepath players plotname iterationData = do
 
     -- mapM_ (\ext -> renderCairo ("plots/iterations/" ++ plotname ++ "." ++ ext) (mkWidth 400) finalPlot) ["png","pdf"]
 
+createSimulationPlotWithGoals :: PlotExtension -> String -> [Player Double] -> String -> [StateControlData] -> IO ()
+createSimulationPlotWithGoals pext filepath players plotname iterationData = do
+    let
+        combinedPlot = mconcat $ map (`createDiagramWithGoals` iterationData) players
+        combinedCars = mconcat $ map (`createCar` iterationData) players
+
+        polyline1 = map (fromJust . positionFromList) (I.lane $ costInfo (players !! 0))
+        polyline2 = map (fromJust . positionFromList) (I.lane $ costInfo (players !! 1))
+
+        
+        comb = combinedCars <> combinedPlot :: QDiagram Cairo V2 Double Any
+
+        polyPlot1 = plotBPosition polyline1 silver # lw thin # withEnvelope (boundingBox comb)
+        polyPlot2 = plotBPosition polyline2 silver # lw thin # withEnvelope (boundingBox comb)
+
+        restr = comb <> polyPlot1 <> polyPlot2
+        finalPlot = bg white (restr # centerXY # padX 1.3 # padY 1.1 )
+        -- finalPlotv = view (p2 (1, 2) :: Point V2 Double) (p2 (3, 34) :: Point V2 Double) finalPlot
+
+    -- renderCairo ("plots/iterations/" ++ plotname ++ extensionToString pext) (mkWidth 400) finalPlot
+    renderCairo (filepath ++ "/plots/simulation/" ++ plotname ++ extensionToString pext) (mkSizeSpec2D (Just 300) (Just 600)) finalPlot
+
+    -- mapM_ (\ext -> renderCairo ("plots/iterations/" ++ plotname ++ "." ++ ext) (mkWidth 400) finalPlot) ["png","pdf"]
+
 
 createPNGPlot :: [Player Double] -> String -> Int -> [StateControlData] -> IO ()
 createPNGPlot = createPlot PNGext
 
 createSimulationPNGPlot :: String -> [Player Double] -> String -> [StateControlData] -> IO ()
 createSimulationPNGPlot = createSimulationPlot PNGext
+
+createSimulationPNGPlotWithGoals :: String -> [Player Double] -> String -> [StateControlData] -> IO ()
+createSimulationPNGPlotWithGoals = createSimulationPlotWithGoals PNGext

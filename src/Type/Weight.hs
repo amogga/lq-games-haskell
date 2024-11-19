@@ -24,6 +24,16 @@ data StateWeight a =
                 proximity :: a,
                 lane ::a,
                 laneBoundary :: a
+            } | 
+            StateWeight4 { 
+                goal :: a,
+                lane :: a,
+                laneBoundary :: a,
+                maxVelocity :: a,
+                minVelocity :: a,
+                nominalVelocity :: a,
+                nominalHeading :: a,
+                proximity :: a
             } deriving (Show, Eq)
 
 data InputWeight a = 
@@ -46,8 +56,11 @@ instance Functor StateWeight where
     StateWeight1 (f goalWht) (f polylineWht) (f boundaryW) (f maxVelW) (f minVelW) (f nomVelW) (f proxW)
   fmap f (StateWeight2 goalWht maxVelW minVelW nomVelW proxW) =
     StateWeight2 (f goalWht) (f maxVelW) (f minVelW) (f nomVelW) (f proxW)
-  fmap f (StateWeight3 nomVel nomHead prox lane laneBoundary) =
-    StateWeight3 (f nomVel) (f nomHead) (f prox) (f lane) (f laneBoundary)
+  fmap f (StateWeight3 nomVel nomHead prox lne laneBound) =
+    StateWeight3 (f nomVel) (f nomHead) (f prox) (f lne) (f laneBound)
+  fmap f (StateWeight4 goalWht polylineWht boundaryW maxVelW minVelW nomVelW nomHeading proxW) =
+    StateWeight4 (f goalWht) (f polylineWht) (f boundaryW) (f maxVelW) (f minVelW) (f nomVelW) (f nomHeading) (f proxW)
+
 
 instance Functor InputWeight where
   fmap f (InputWeight1 angVelW accW) = InputWeight1 (f angVelW) (f accW)

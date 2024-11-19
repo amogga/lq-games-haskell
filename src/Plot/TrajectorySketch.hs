@@ -107,6 +107,34 @@ createSimulationPlot pext filepath players plotname iterationData = do
 
     -- mapM_ (\ext -> renderCairo ("plots/iterations/" ++ plotname ++ "." ++ ext) (mkWidth 400) finalPlot) ["png","pdf"]
 
+
+createSimulationPlotWithAllLanes :: PlotExtension -> String -> [Player Double] -> String -> [StateControlData] -> IO ()
+createSimulationPlotWithAllLanes pext filepath players plotname iterationData = do
+    let
+        combinedPlot = mconcat $ map (`createDiagram` iterationData) players
+        combinedCars = mconcat $ map (`createCar` iterationData) players
+
+        polyline1 = map (fromJust . positionFromList) (I.lane $ costInfo (players !! 0))
+        polyline2 = map (fromJust . positionFromList) (I.lane $ costInfo (players !! 1))
+        polyline3 = map (fromJust . positionFromList) (I.lane $ costInfo (players !! 2))
+
+        
+        comb = combinedCars <> combinedPlot :: QDiagram Cairo V2 Double Any
+
+        polyPlot1 = plotBPosition polyline1 silver # lw thin # withEnvelope (boundingBox comb)
+        polyPlot2 = plotBPosition polyline2 silver # lw thin # withEnvelope (boundingBox comb)
+        polyPlot3 = plotBPosition polyline3 silver # lw thin # withEnvelope (boundingBox comb)
+
+        restr = comb <> polyPlot1 <> polyPlot2 <> polyPlot3
+        finalPlot = bg white (restr # centerXY # padX 1.3 # padY 1.1 )
+        -- finalPlotv = view (p2 (1, 2) :: Point V2 Double) (p2 (3, 34) :: Point V2 Double) finalPlot
+
+    -- renderCairo ("plots/iterations/" ++ plotname ++ extensionToString pext) (mkWidth 400) finalPlot
+    renderCairo (filepath ++ "/plots/simulation/" ++ plotname ++ extensionToString pext) (mkSizeSpec2D (Just 300) (Just 600)) finalPlot
+
+    -- mapM_ (\ext -> renderCairo ("plots/iterations/" ++ plotname ++ "." ++ ext) (mkWidth 400) finalPlot) ["png","pdf"]
+
+
 createSimulationPlotWithGoals :: PlotExtension -> String -> [Player Double] -> String -> [StateControlData] -> IO ()
 createSimulationPlotWithGoals pext filepath players plotname iterationData = do
     let
@@ -137,6 +165,9 @@ createPNGPlot = createPlot PNGext
 
 createSimulationPNGPlot :: String -> [Player Double] -> String -> [StateControlData] -> IO ()
 createSimulationPNGPlot = createSimulationPlot PNGext
+
+createSimulationPNGPlotWithLanes :: String -> [Player Double] -> String -> [StateControlData] -> IO ()
+createSimulationPNGPlotWithLanes = createSimulationPlotWithAllLanes PNGext
 
 createSimulationPNGPlotWithGoals :: String -> [Player Double] -> String -> [StateControlData] -> IO ()
 createSimulationPNGPlotWithGoals = createSimulationPlotWithGoals PNGext

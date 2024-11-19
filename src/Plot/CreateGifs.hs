@@ -46,6 +46,16 @@ createAnimationWithIteration filepath players iter = do
     mapM_ (\it -> createSimulationPNGPlot filepath players ("plot_instant" ++ show it) (take (it+1) iter)) [0..horizonCount-1]
     createAnimation (filepath ++ "/plots/simulation/plot_instant") horizonCount (filepath ++ "/plots/animation.gif")
 
+createAnimationWithIterationWithLanes :: String -> [Player Double] -> [StateControlData] -> IO ()
+createAnimationWithIterationWithLanes filepath players iter = do
+    ensureDirectoryExists $ filepath ++ "/plots/simulation"
+    deleteAllFilesInDir $ filepath ++ "/plots/simulation"
+
+    let horizonCount = length iter
+    mapM_ (\it -> createSimulationPNGPlotWithLanes filepath players ("plot_instant" ++ show it) (take (it+1) iter)) [0..horizonCount-1]
+    createAnimation (filepath ++ "/plots/simulation/plot_instant") horizonCount (filepath ++ "/plots/animation.gif")
+
+
 createAnimationWithGoalsAndIteration :: String -> [Player Double] -> [StateControlData] -> IO ()
 createAnimationWithGoalsAndIteration filepath players iter = do
     ensureDirectoryExists $ filepath ++ "/plots/simulation"

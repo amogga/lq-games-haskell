@@ -1,10 +1,15 @@
 module Main (main) where
 
+import Simulation
+
 main :: IO ()
 main = do
-  -- This is example 4 Haskell code
-  putStrLn "this is example 4"
-  let c = [1,2.3] :: [Double]
-  print "sdf"
+    -- run simulation
+    let iters = runSimulationWithIterationAndMaxTimeE simParamsMaxT initState initInput  
 
-  print c
+    -- compute costs per iteration
+    let costs = map totalCostsForPlayersPerIterationE iters
+    print $ last costs
+    
+    -- Create animation
+    createAnimationOfEquilibriumE $ last iters

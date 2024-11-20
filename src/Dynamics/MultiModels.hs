@@ -15,6 +15,7 @@ linearDynamics dyn x u = LinearContinuousMultiSystemDynamics { systemMatrix = a,
     ball = matrix 6 $ concat $ inputJacobian dyn (toList x) (toList u)
     bs = map (\p -> ball ?? (All, Pos (fromList p))) (chunksOf 2 [0..5])
 
+-- FIXME: Generalize players, states & input count
 multiPlayerSystem :: [[a] -> [a] -> [a]] -> [a] -> [a] -> [a]
 multiPlayerSystem dyn xs us = concat (zipWith (\sys (x,u) -> sys x u) dyn xuv)
   where

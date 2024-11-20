@@ -30,7 +30,7 @@ totalCost player states input =
                                               W.goal stateWeightCar * goalCostVal +
 
                                               -- stay in lane
-                                              W.lane stateWeightCar * laneCostVal + W.lane stateWeightCar * laneBoundaryCostVal +
+                                              W.lane stateWeightCar * laneCostVal + W.laneBoundary stateWeightCar * laneBoundaryCostVal +
 
                                               -- adjust speed and keep within bounds: nominal, maximum and minimum speed
                                               W.maxVelocity stateWeightCar * maxVelCostVal + 

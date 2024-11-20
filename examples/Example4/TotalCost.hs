@@ -33,7 +33,8 @@ totalCost player@(Car _ inputIdx _ stateWgt inputWght _) states input =
       -- W.nominalHeading stateWgt * nominalHeadingVal +
 
       -- stay in lane
-      W.lane stateWgt * laneCostVal + W.lane stateWgt * laneBoundaryCostVal +
+      W.lane stateWgt * laneCostVal + 
+      W.laneBoundary stateWgt * laneBoundaryCostVal +
 
       -- adjust speed and keep within bounds: nominal, maximum and minimum speed
       W.maxVelocity stateWgt * maxVelCostVal + 

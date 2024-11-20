@@ -20,12 +20,11 @@ totalCost player@(Car _ inputIdx _ stateWgt inputWght _) states input =
       minVelCostVal = minimumVelocityCost player states
       nominalVelocityVal = nominalVelocityCost player states
       nominalHeadingVal = nominalHeadingCost player states
+      laneCostVal =  laneCost player states
+      laneBoundaryCostVal = laneBoundaryCost player states
+      angularVelocityCostVal = input !! angularVelocityInputIndex inputIdx
+      accelerationCostVal = input !! accelerationInputIndex inputIdx
   in
-   let laneCostVal =  laneCost player states
-       laneBoundaryCostVal = laneBoundaryCost player states
-       angularVelocityCostVal = input !! angularVelocityInputIndex inputIdx
-       accelerationCostVal = input !! accelerationInputIndex inputIdx
-      in
       -- progress
       -- W.goal stateWgt * goalCostVal +
 

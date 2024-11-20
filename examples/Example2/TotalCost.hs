@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 module TotalCost (totalCost) where
 
 import Example.Cost.HeadingCost

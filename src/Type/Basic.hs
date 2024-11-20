@@ -4,6 +4,9 @@ module Type.Basic where
 
 import Numeric.LinearAlgebra
 
+type TimeInstant a = a
+type DiscreteSample = Double
+
 -- state and control data
 type StateResponseSolverState = Vector R
 data StateControlData = StateControlPair { priorState:: Vector R,  controlInput:: Vector R } | 

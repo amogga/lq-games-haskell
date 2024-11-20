@@ -45,6 +45,7 @@ library
       Solver.LQGame
       Type.Basic
       Type.CostInfo
+      Type.Dynamics
       Type.Index
       Type.Player
       Type.Plot

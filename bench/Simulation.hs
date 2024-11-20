@@ -9,6 +9,9 @@ import Example.Simulation
 import Example.Utilities
 import TotalCost
 import Type.Simulation
+import Type.Dynamics
+import Dynamics.Models
+import Dynamics.MultiModels
 
 simParamsHorizon :: SimulationParameters
 simParamsHorizon = SimulationParametersWithHorizon {iterationCount = 60, sample = 0.1, horizon = 50}
@@ -29,14 +32,17 @@ initInput = vector [0,0,
 players :: Floating a => [Player a]
 players = [player1, player2, bicycle]
 
+nonlinearDynamics :: SystemDynamicsFunctionType
+nonlinearDynamics = multiPlayerSystem [carDyn,carDyn,bicDyn]
+
 quadratizeCostsT :: StateControlData -> LinearMultiSystemCosts
 quadratizeCostsT = quadratizeCosts totalCost players
 
 runSimulationWithIterationAndHorizonT :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
-runSimulationWithIterationAndHorizonT = runSimulationWithIterationAndHorizon totalCost players
+runSimulationWithIterationAndHorizonT = runSimulationWithIterationAndHorizon nonlinearDynamics totalCost players
 
 runSimulationWithIterationAndMaxTimeT :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
-runSimulationWithIterationAndMaxTimeT = runSimulationWithIterationAndMaxTime totalCost players
+runSimulationWithIterationAndMaxTimeT = runSimulationWithIterationAndMaxTime nonlinearDynamics totalCost players
 
 totalCostsForPlayersPerIterationT :: [StateControlData] -> [R]
 totalCostsForPlayersPerIterationT = totalCostsForPlayersPerIteration totalCost players

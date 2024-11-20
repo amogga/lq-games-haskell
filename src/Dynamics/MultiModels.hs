@@ -1,31 +1,27 @@
+{-# LANGUAGE ImpredicativeTypes #-}
 module Dynamics.MultiModels where
 
 import Data.List.Split (chunksOf)
-import Dynamics.Models
 import Numeric.LinearAlgebra
 import Type.Basic
+import Type.Dynamics
 import Numeric.AD
 
-linearDynamics :: Vector R -> Vector R -> LinearMultiSystemDynamics
-linearDynamics x u = LinearContinuousMultiSystemDynamics { systemMatrix = a, inputMatrices = bs }
+-- FIXME: Generalize players, states & input count
+linearDynamics :: SystemDynamicsFunctionType -> Vector R -> Vector R -> LinearMultiSystemDynamics
+linearDynamics dyn x u = LinearContinuousMultiSystemDynamics { systemMatrix = a, inputMatrices = bs }
   where
-    a = mat ?? (All, Take 12)
+    a = matrix 12 $ concat $ stateJacobian dyn (toList x) (toList u)
+    ball = matrix 6 $ concat $ inputJacobian dyn (toList x) (toList u)
     bs = map (\p -> ball ?? (All, Pos (fromList p))) (chunksOf 2 [0..5])
 
-    ball = mat ?? (All, Drop 12)
-    mat = (12><18) res :: Matrix R
-    res = concat (jacobian system (toList $ vjoin [x, u]))
-
-nonlinearDynamics :: Vector R -> Vector R -> Vector R
-nonlinearDynamics x u = vector $ concat (zipWith (\sys (xs,us) -> sys xs us) dyn xuv)
+multiPlayerSystem :: [[a] -> [a] -> [a]] -> [a] -> [a] -> [a]
+multiPlayerSystem dyn xs us = concat (zipWith (\sys (x,u) -> sys x u) dyn xuv)
   where
-    dyn = [carDyn,carDyn,bicDyn]
-    xuv = zip (chunksOf 4 $ toList x) (chunksOf 2 $ toList u)
-
--- Overall system consisting of three players
-system :: Floating a => [a] -> [a]
-system xu = concat (zipWith (\sys (x,u) -> sys x u) dyn xuv)
-  where
-    dyn = [carDyn,carDyn,bicDyn]
-    (xs, us) = splitAt 12 xu
     xuv = zip (chunksOf 4 xs) (chunksOf 2 us)
+
+stateJacobian :: (Floating a) => SystemDynamicsFunctionType -> [a] -> [a] -> [[a]]
+stateJacobian dyn x u = jacobian (\xs -> dyn xs (fmap auto u)) x
+
+inputJacobian :: (Floating a) => SystemDynamicsFunctionType -> [a] -> [a] -> [[a]]
+inputJacobian dyn x = jacobian (dyn (fmap auto x))

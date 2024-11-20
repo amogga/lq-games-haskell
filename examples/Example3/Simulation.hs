@@ -10,6 +10,9 @@ import Example.Utilities
 import TotalCost
 import Plot.CreateGifs
 import Type.Simulation
+import Type.Dynamics
+import Dynamics.Models
+import Dynamics.MultiModels
 
 simParamsHorizon :: SimulationParameters
 simParamsHorizon = SimulationParametersWithHorizon {iterationCount = 50, sample = 0.25, horizon = 20}
@@ -30,15 +33,18 @@ initInput = vector [0,0,
 players :: Floating a => [Player a]
 players = [player1, player2, bicycle]
 
+nonlinearDynamics :: SystemDynamicsFunctionType
+nonlinearDynamics = multiPlayerSystem [carDyn,carDyn,bicDyn]
+
 quadratizeCostsE1 :: StateControlData -> LinearMultiSystemCosts
 quadratizeCostsE1 = quadratizeCosts totalCost players
 
 runSimulationWithIterationAndMaxTimeE :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
-runSimulationWithIterationAndMaxTimeE = runSimulationWithIterationAndMaxTime totalCost players
+runSimulationWithIterationAndMaxTimeE = runSimulationWithIterationAndMaxTime nonlinearDynamics totalCost players
 
 
 runSimulationWithIterationAndHorizonE :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
-runSimulationWithIterationAndHorizonE = runSimulationWithIterationAndHorizon totalCost players
+runSimulationWithIterationAndHorizonE = runSimulationWithIterationAndHorizon nonlinearDynamics totalCost players
 
 totalCostsForPlayersPerIterationE :: [StateControlData] -> [R]
 totalCostsForPlayersPerIterationE = totalCostsForPlayersPerIteration totalCost players

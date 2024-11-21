@@ -22,6 +22,7 @@ quadratizeCosts tcost players stateControlPair = LinearMultiSystemCosts qs ls rs
       let LinearSystemCosts q l r = quadratizeCostsForPlayer tcost player x u
       in (q, l, r)
 
+-- FIXME: handle nan values
 quadratizeCostsForPlayer :: CostFunctionType -> Player R -> Vector R -> Vector R -> LinearSystemCosts
 quadratizeCostsForPlayer tcost player x u = LinearSystemCosts qs ls rs
   where
@@ -45,6 +46,3 @@ stateHessian totCost player states input = hessian (\x -> totCost (fmap auto pla
 
 inputHessian :: CostFunctionType -> Player Double -> [Double] -> [Double] -> [[Double]]
 inputHessian totCost player states = hessian (totCost (fmap auto player) (map auto states))
-
-
-

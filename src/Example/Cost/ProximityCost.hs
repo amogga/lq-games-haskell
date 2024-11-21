@@ -6,7 +6,7 @@ import Type.Index
 import qualified Type.CostInfo as I
 import Type.Utilities
 
-
+-- TODO: refine
 proximityCost :: (Floating a, Ord a) => Player a -> [a] -> a
 proximityCost player states = proximityCost' player egoPosition otherPositions
   where 

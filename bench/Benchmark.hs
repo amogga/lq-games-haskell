@@ -33,4 +33,3 @@ main = do
 
     where
         initPairs = StateControlPair initState initInput
-

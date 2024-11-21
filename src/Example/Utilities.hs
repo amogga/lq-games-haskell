@@ -10,7 +10,7 @@ import Algorithm.ODESolver
 import Type.Quadratization
 import Type.Dynamics
 
-generateInitialStateControlPairs :: SystemDynamicsFunctionType -> Vector R -> Vector R -> R -> Int -> [StateControlData]
+generateInitialStateControlPairs :: SystemDynamicsFunctionType -> Vector R -> Vector R -> DiscreteSample -> Horizon -> [StateControlData]
 generateInitialStateControlPairs dyn states input sample horizon = zipWith StateControlPair initialOperatingPoints initialInputs
   where
     initialOperatingPoints = take horizon $ iterate (\x -> rk4Solve dyn x input sample) states

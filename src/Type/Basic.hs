@@ -6,6 +6,7 @@ import Numeric.LinearAlgebra
 
 type TimeInstant a = a
 type DiscreteSample = Double
+type Horizon = Int
 
 -- state and control data
 type StateResponseSolverState = Vector R

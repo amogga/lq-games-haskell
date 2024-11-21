@@ -5,14 +5,14 @@ import Numeric.LinearAlgebra
 import Type.Dynamics
 import Type.Basic
 
-rk4Solve :: SystemDynamicsFunctionType -> Vector R -> Vector R -> TimeInstant R -> Vector R
-rk4Solve stateFnc x u instant = last $ take (n + 1) $ iterate (\xs -> rungeKutta4MethodInstance stateFnc xs u h) x
+rk4Solve :: SystemDynamicsFunctionType -> TimeInstant R -> Vector R -> Vector R -> Vector R
+rk4Solve stateFnc instant x u = last $ take (n + 1) $ iterate (\xs -> rungeKutta4MethodInstance stateFnc h xs u) x
   where 
     h = instant / fromIntegral n
     n = 10
 
-rungeKutta4MethodInstance :: SystemDynamicsFunctionType -> Vector R -> Vector R -> TimeInstant R -> Vector R
-rungeKutta4MethodInstance stateFnc x u h = x + xns
+rungeKutta4MethodInstance :: SystemDynamicsFunctionType -> TimeInstant R -> Vector R -> Vector R -> Vector R
+rungeKutta4MethodInstance stateFnc h x u = x + xns
   where
   xns = scalar (h / 6.0) * (k1 + scalar 2 * k2 + scalar 2 * k3 + k4)
 

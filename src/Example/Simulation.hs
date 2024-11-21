@@ -50,7 +50,7 @@ computeControlStateStep dyn sample cspair (PAndAlpha p alpha) = do
         alphaScale = 0.1
 
     let u = reshape 1 uref - p <> (reshape 1 x - reshape 1 xref) - scale alphaScale alpha
-        xn = rk4Solve dyn x (flatten u) sample
+        xn = rk4Solve dyn sample x (flatten u)
 
     put xn
     return $ StateControlWResponse x (flatten u) xn

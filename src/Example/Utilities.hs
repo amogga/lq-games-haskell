@@ -13,7 +13,7 @@ import Type.Dynamics
 generateInitialStateControlPairs :: SystemDynamicsFunctionType -> Vector R -> Vector R -> DiscreteSample -> Horizon -> [StateControlData]
 generateInitialStateControlPairs dyn states input sample horizon = zipWith StateControlPair initialOperatingPoints initialInputs
   where
-    initialOperatingPoints = take horizon $ iterate (\x -> rk4Solve dyn x input sample) states
+    initialOperatingPoints = take horizon $ iterate (\x -> rk4Solve dyn sample x input) states
     initialInputs = replicate horizon input
 
 totalCostsForPlayersPerIteration :: CostFunctionType -> [Player R] -> [StateControlData] -> [R]

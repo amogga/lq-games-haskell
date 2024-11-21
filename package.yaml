@@ -34,6 +34,7 @@ dependencies:
 - process
 
 ghc-options:
+- -O2
 - -Wall
 - -Wcompat
 - -Widentities

@@ -116,4 +116,8 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
+    - hspec
+    - hspec-contrib
+    - HUnit
+    - QuickCheck
     - lq-games

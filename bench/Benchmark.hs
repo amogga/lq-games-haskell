@@ -26,7 +26,7 @@ main = do
 
   defaultMainWith config [
             bgroup "LQ Solver" [
-                bench "Total Cost" $ nf quadratizeCostsT initPairs,
+                bench "Total Cost" $ nf quadratizeCostsT (Just initPairs),
                 bench "Equilibrium" $ nf (runSimulationWithIterationAndMaxTimeT simParamsMaxT initState) initInput
            ]
         ]

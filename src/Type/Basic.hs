@@ -21,6 +21,12 @@ data LinearMultiSystemDynamics = LinearContinuousMultiSystemDynamics {systemMatr
 data LinearMultiSystemCosts = LinearMultiSystemCosts { statesHessians :: [Matrix R], statesGradients:: [Vector R], inputHessians :: [[Matrix R]] } deriving (Show)
 data LinearSystemCosts = LinearSystemCosts { qMatrix :: Matrix R, lMatrix:: Vector R, rMatrices :: [Matrix R] } deriving (Show)
 
+lmultiSystemCostsFromlsCosts :: [LinearSystemCosts] -> LinearMultiSystemCosts
+lmultiSystemCostsFromlsCosts linearSystemCosts = LinearMultiSystemCosts qs ls rs
+    where 
+        (qs,ls,rs) = unzip3 $ map extractCosts linearSystemCosts
+        extractCosts lc = let LinearSystemCosts qm lv rm = lc in (qm,lv, rm)
+
 -- types
 data LQGameState = LQGameState { z::[Matrix R], zeta::[Vector R] }
 data PAndAlpha = PAndAlpha { pMatrix :: Matrix R, alphaMatrix :: Matrix R} deriving (Show)

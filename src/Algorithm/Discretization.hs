@@ -4,8 +4,8 @@ import Prelude hiding ((<>))
 import Numeric.LinearAlgebra
 import Type.Basic
 
-forwardEulerMulti :: LinearMultiSystemDynamics -> DiscreteSample -> LinearMultiSystemDynamics
-forwardEulerMulti (LinearContinuousMultiSystemDynamics a bs) ts = LinearDiscreteMultiSystemDynamics ad bd ts
+forwardEulerMulti :: DiscreteSample -> LinearMultiSystemDynamics -> LinearMultiSystemDynamics
+forwardEulerMulti ts (LinearContinuousMultiSystemDynamics a bs)  = LinearDiscreteMultiSystemDynamics ad bd ts
   where
     ad = ident (rows a) + scale ts a
     bd = map (scale ts) bs

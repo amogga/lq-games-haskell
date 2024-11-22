@@ -36,9 +36,6 @@ players = [player1, player2, bicycle]
 nonlinearDynamics :: SystemDynamicsFunctionType
 nonlinearDynamics = multiPlayerSystem [carDyn,carDyn,bicDyn]
 
-quadratizeCostsE1 :: StateControlData -> LinearMultiSystemCosts
-quadratizeCostsE1 = quadratizeCosts totalCost players
-
 -- runSimulationWithTerminationE1 :: Vector R -> Vector R -> Double -> Int -> [[StateControlData]]
 -- runSimulationWithTerminationE1 = runSimulationWithTermination totalCost players
 

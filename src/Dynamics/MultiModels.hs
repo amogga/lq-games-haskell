@@ -8,9 +8,11 @@ import Type.Dynamics
 import Numeric.AD
 
 -- FIXME: Generalize players, states & input count
-linearDynamics :: SystemDynamicsFunctionType -> Vector R -> Vector R -> LinearMultiSystemDynamics
-linearDynamics dyn x u = LinearContinuousMultiSystemDynamics { systemMatrix = a, inputMatrices = bs }
+linearDynamics :: SystemDynamicsFunctionType -> StateControlData -> LinearMultiSystemDynamics
+linearDynamics dyn cspair = LinearContinuousMultiSystemDynamics { systemMatrix = a, inputMatrices = bs }
   where
+    x = priorState cspair
+    u = controlInput cspair
     a = matrix 12 $ concat $ stateJacobian dyn (toList x) (toList u)
     ball = matrix 6 $ concat $ inputJacobian dyn (toList x) (toList u)
     bs = map (\p -> ball ?? (All, Pos (fromList p))) (chunksOf 2 [0..5])

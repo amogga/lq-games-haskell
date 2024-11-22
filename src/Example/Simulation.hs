@@ -36,8 +36,8 @@ overallSolver dyn totcost players sample statesInput = controlStateResponseSolve
 lqGameSolverWStateControl :: SystemDynamicsFunctionType -> CostFunctionType -> [Player R] -> DiscreteSample -> [StateControlData] -> [PAndAlpha]
 lqGameSolverWStateControl dyn totCost players sample stateControlPair = lqGameSolver dynlist costslist
     where 
-        dynlist = reverse $ map (discreteLinearDynamics dyn sample) stateControlPair
-        costslist = reverse $ map (quadratizeCosts totCost players) stateControlPair
+        dynlist = reverse $ discreteLinearDynamics dyn sample stateControlPair
+        costslist = reverse $ quadratizeCosts totCost players stateControlPair
 
 controlStateResponseSolver :: SystemDynamicsFunctionType -> DiscreteSample -> Vector R -> [StateControlData] -> [PAndAlpha] -> [StateControlData]
 controlStateResponseSolver dyn sample initialStates stateControlData pAndAlpha = evalState (zipWithM (computeControlStateStep dyn sample) stateControlData pAndAlpha) initialStates

@@ -34,12 +34,11 @@ players = [player1, player2, player3]
 nonlinearDynamics :: SystemDynamicsFunctionType
 nonlinearDynamics = multiPlayerSystem [carDyn,carDyn,carDyn]
 
-quadratizeCostsE1 :: StateControlData -> LinearMultiSystemCosts
-quadratizeCostsE1 = quadratizeCosts totalCost players
+quadratizeCostsT :: Monad m => m StateControlData -> m LinearMultiSystemCosts
+quadratizeCostsT = quadratizeCosts totalCost players
 
 runSimulationWithIterationAndMaxTimeE :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
 runSimulationWithIterationAndMaxTimeE = runSimulationWithIterationAndMaxTime nonlinearDynamics totalCost players
-
 
 runSimulationWithIterationAndHorizonE :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
 runSimulationWithIterationAndHorizonE = runSimulationWithIterationAndHorizon nonlinearDynamics totalCost players

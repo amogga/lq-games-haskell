@@ -3,7 +3,7 @@ module Simulation where
 import Type.Player
 import Players
 import Type.Basic
-import Example.Quadratization (quadratizeCosts, quadratizeCostsForPlayer)
+import Example.Quadratization (quadratizeCosts)
 import Example.Simulation
 import Example.Utilities
 import TotalCost (totalCost)
@@ -34,12 +34,6 @@ players = [player1, player2, player3]
 
 nonlinearDynamics :: SystemDynamicsFunctionType
 nonlinearDynamics = multiPlayerSystem [carDyn,carDyn,bicDyn]
-
-quadratizeCostsE :: StateControlData -> LinearMultiSystemCosts
-quadratizeCostsE = quadratizeCosts totalCost players
-
-quadratizeCostsForPlayerE :: Player R -> Vector R -> Vector R -> LinearSystemCosts
-quadratizeCostsForPlayerE = quadratizeCostsForPlayer totalCost
 
 runSimulationWithIterationAndMaxTimeE :: SimulationParameters -> Vector R -> Vector R -> [[StateControlData]]
 runSimulationWithIterationAndMaxTimeE = runSimulationWithIterationAndMaxTime nonlinearDynamics totalCost players

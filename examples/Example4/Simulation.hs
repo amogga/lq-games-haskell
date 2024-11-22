@@ -15,10 +15,10 @@ import Dynamics.MultiModels
 import Dynamics.Models
 
 simParamsMaxT :: SimulationParameters
-simParamsMaxT = SimulationParametersWithMaxTime { iterationCount = 150, sample = 0.1, maxTime = 12  }
+simParamsMaxT = SimulationParametersWithMaxTime {iterationCount = 50, sample = 0.25, maxTime = 15}
 
 simParamsHorizon :: SimulationParameters
-simParamsHorizon = SimulationParametersWithHorizon { iterationCount = 1, sample = 0.25, horizon = 2 }
+simParamsHorizon = SimulationParametersWithHorizon { iterationCount = 50, sample = 0.25, horizon = 24 }
 
 initState :: Vector R
 initState = vector [-2, -30.0, pi / 2.0 , 4.0,

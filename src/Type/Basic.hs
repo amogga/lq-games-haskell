@@ -1,5 +1,3 @@
-{-# OPTIONS_GHC -Wno-partial-fields #-}
-
 module Type.Basic where
 
 import Numeric.LinearAlgebra

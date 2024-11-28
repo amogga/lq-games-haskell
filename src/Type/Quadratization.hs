@@ -1,4 +1,3 @@
-{-# LANGUAGE RankNTypes #-}
 module Type.Quadratization (CostFunctionType) where
 
 import Type.Player

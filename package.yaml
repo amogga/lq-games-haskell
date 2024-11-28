@@ -44,9 +44,26 @@ ghc-options:
 - -Wmissing-home-modules
 - -Wpartial-fields
 - -Wredundant-constraints
+- -Wno-orphans
+- -Wno-partial-fields
+- -Wno-incomplete-uni-patterns
+- -Wno-incomplete-patterns
+- -Wno-unrecognised-pragmas
+
+default-extensions:
+  - DeriveAnyClass
+  - StandaloneDeriving
+  - DeriveGeneric
+  - RankNTypes
+  - ImpredicativeTypes
+  - NoMonomorphismRestriction
+  - FlexibleContexts
+  - TypeFamilies
 
 library:
   source-dirs: src
+
+
 
 executables:
   lq-games-exe:

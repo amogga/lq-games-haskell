@@ -1,5 +1,3 @@
-{-# LANGUAGE RankNTypes #-}
-
 module Example.Utilities where
 
 import Type.Basic

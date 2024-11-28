@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -Wno-partial-fields #-}
 module Type.Weight (StateWeight(..),InputWeight(..)) where
 
 data StateWeight a = 

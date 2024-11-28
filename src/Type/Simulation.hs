@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -Wno-partial-fields #-}
 module Type.Simulation where
 
 data SimulationParameters = SimulationParametersWithHorizon { iterationCount :: Int, sample :: Double, horizon :: Int} |

@@ -1,7 +1,3 @@
-{-# LANGUAGE StandaloneDeriving #-}
-{-# LANGUAGE DeriveAnyClass #-}
-{-# OPTIONS_GHC -Wno-orphans #-}
-{-# LANGUAGE DeriveGeneric #-}
 module Main (main) where
 
 import Criterion.Main

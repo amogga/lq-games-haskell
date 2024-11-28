@@ -1,8 +1,3 @@
-{-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
-{-# LANGUAGE RankNTypes #-}
-{-# HLINT ignore "Eta reduce" #-}
-
 module Example.Quadratization (quadratizeCosts) where
 
 import Numeric.LinearAlgebra

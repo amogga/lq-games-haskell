@@ -1,4 +1,3 @@
-{-# LANGUAGE RankNTypes #-}
 module Algorithm.ODESolver (rk4Solve) where
 
 import Numeric.LinearAlgebra

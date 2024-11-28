@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -Wno-partial-fields #-}
 module Type.Index(InputIndex(..),StateIndex(..)) where 
 
 data InputIndex = InputIndex1 {

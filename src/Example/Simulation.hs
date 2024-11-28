@@ -1,7 +1,3 @@
-{-# OPTIONS_GHC -Wno-partial-fields #-}
-{-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
-{-# LANGUAGE RankNTypes #-}
-{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 module Example.Simulation where 
 
 import Prelude hiding ((<>))

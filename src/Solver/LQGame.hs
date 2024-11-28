@@ -1,6 +1,3 @@
-{-# LANGUAGE FlexibleContexts #-}
-{-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
-{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 module Solver.LQGame where
 
 import Prelude hiding ((<>))

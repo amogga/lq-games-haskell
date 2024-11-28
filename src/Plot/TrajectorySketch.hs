@@ -1,6 +1,3 @@
-{-# LANGUAGE NoMonomorphismRestriction #-}
-{-# LANGUAGE FlexibleContexts          #-}
-{-# LANGUAGE TypeFamilies              #-}
 module Plot.TrajectorySketch where
 
 import Diagrams.Prelude

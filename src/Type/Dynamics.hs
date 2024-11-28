@@ -1,4 +1,3 @@
-{-# LANGUAGE RankNTypes #-}
 module Type.Dynamics (SystemDynamicsFunctionType, SystemDynamicsFunctionTypeA, SystemDynamicsFunctionTypeV) where
     
 import Numeric.AD

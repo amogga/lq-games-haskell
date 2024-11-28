@@ -1,4 +1,3 @@
-{-# LANGUAGE RankNTypes #-}
 module Dynamics.DiscreteModels (discreteLinearDynamics) where
 
 import Type.Basic

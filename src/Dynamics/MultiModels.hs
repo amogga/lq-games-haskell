@@ -1,4 +1,3 @@
-{-# LANGUAGE ImpredicativeTypes #-}
 module Dynamics.MultiModels where
 
 import Data.List.Split (chunksOf)

@@ -1,4 +1,5 @@
 module Plot.CreateGifs where
+
 import System.Process (callProcess)
 import System.Directory ( removeFile, listDirectory, createDirectoryIfMissing )
 import Control.Monad (forM_)

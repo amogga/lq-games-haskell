@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -Wno-partial-fields #-}
 module Type.CostInfo (CostInfo(..)) where 
 
 import qualified Type.Position as P

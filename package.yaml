@@ -63,8 +63,6 @@ default-extensions:
 library:
   source-dirs: src
 
-
-
 executables:
   lq-games-exe:
     main:                Main.hs
@@ -112,17 +110,6 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - lq-games
-  benchmark:
-    main: Benchmark.hs
-    source-dirs: bench
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - criterion
-    - lq-games
-    - deepseq
 
 tests:
   lq-games-test:
@@ -138,3 +125,16 @@ tests:
     - HUnit
     - QuickCheck
     - lq-games
+
+benchmarks:
+  main-benchmark:
+    main: Benchmark.hs
+    source-dirs: bench
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - criterion
+    - lq-games
+    - deepseq

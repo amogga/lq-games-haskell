@@ -1,6 +1,5 @@
 module Simulation where
 
-import Example.Quadratization
 import Players
 import Type.Basic
 import Type.Player

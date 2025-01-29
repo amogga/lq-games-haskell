@@ -9,7 +9,7 @@
 # to be used for project dependencies. For example:
 #
 # snapshot: lts-22.37
-snapshot: nightly-2025-01-20
+snapshot: lts-22.43
 # snapshot: ghc-9.6.6
 #
 # The location of a snapshot can be provided as a file or url. Stack assumes

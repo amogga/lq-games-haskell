@@ -63,4 +63,3 @@ totalCost player states input =
                                                 -- penalize inputs: steering angle and acceleration
                                                 W.steeringAngle inputWeightBicycle * steeringAngleCostVal ** 2 + 
                                                 W.acceleration inputWeightBicycle * accelerationCostVal ** 2
-

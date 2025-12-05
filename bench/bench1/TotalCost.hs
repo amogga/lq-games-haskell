@@ -8,7 +8,6 @@ import Type.Player
 import qualified Type.Weight as W
 import Type.Index
 
-
 totalCost :: (Floating a, Ord a) => Player a -> [a] -> [a] -> a
 totalCost player states input =
   let 

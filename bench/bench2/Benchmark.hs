@@ -15,15 +15,14 @@ deriving instance NFData StateControlData
 main :: IO ()
 main = do
   let config = defaultConfig
-          { jsonFile = Just "bench/reports/report.json",
-            csvFile = Just "bench/reports/summary.csv",
-            reportFile = Just "bench/reports/report.html"
+          { jsonFile = Just "bench/reports/bench2-report.json",
+            csvFile = Just "bench/reports/bench2-summary.csv",
+            reportFile = Just "bench/reports/bench2-report.html"
         }
 
   defaultMainWith config [
-            bgroup "LQ Solver" [
-                bench "Total Cost" $ nf quadratizeCostsT (Just initPairs),
-                bench "Equilibrium" $ nf (runSimulationWithIterationAndMaxTimeT simParamsMaxT initState) initInput
+            bgroup "Example5 Overtaking" [
+                bench "Equilibrium" $ nf (runSimulationWithIterationAndHorizonE simParamsHorizon initState) initInput
            ]
         ]
 

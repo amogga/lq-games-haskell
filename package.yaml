@@ -62,6 +62,8 @@ default-extensions:
 
 library:
   source-dirs: src
+  pkg-config-dependencies:
+    - pangocairo
 
 executables:
   lq-games-exe:
@@ -110,6 +112,24 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - lq-games
+  example5:
+    main: Main.hs
+    source-dirs: examples/Example5
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - lq-games
+  example6:
+    main: Main.hs
+    source-dirs: examples/Example6
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - lq-games
 
 tests:
   lq-games-test:
@@ -127,9 +147,20 @@ tests:
     - lq-games
 
 benchmarks:
-  main-benchmark:
+  bench1:
     main: Benchmark.hs
-    source-dirs: bench
+    source-dirs: bench/bench1
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - criterion
+    - lq-games
+    - deepseq
+  bench2:
+    main: Benchmark.hs
+    source-dirs: bench/bench2
     ghc-options:
     - -threaded
     - -rtsopts

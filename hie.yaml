@@ -1,0 +1,30 @@
+cradle:
+  multi:
+    - path: "./.stack-work"
+      config:
+        cradle:
+          none:
+    - path: "./"
+      config:
+        cradle:
+          stack:
+            - path: "./app"
+              component: "lq-games:exe:lq-games-exe"
+            - path: "./src"
+              component: "lq-games:lib"
+            - path: "./examples/Example1"
+              component: "lq-games:exe:example1"
+            - path: "./examples/Example2"
+              component: "lq-games:exe:example2"
+            - path: "./examples/Example3"
+              component: "lq-games:exe:example3"
+            - path: "./examples/Example4"
+              component: "lq-games:exe:example4"
+            - path: "./examples/Example5"
+              component: "lq-games:exe:example5"
+            - path: "./examples/Example6"
+              component: "lq-games:exe:example6"
+            - path: "./bench/bench1"
+              component: "lq-games:bench:bench1"
+            - path: "./bench/bench2"
+              component: "lq-games:bench:bench2"

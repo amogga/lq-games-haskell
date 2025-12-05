@@ -17,23 +17,22 @@ player1 :: Floating a => Player a
 player1 = let
               -- state and input costs (faster car behind, wants to overtake)
               costInfo1 = I.CostInfo4 { I.goal = Position (-2.0,50.0),
-                                      I.lane = [[-2.0,-1000.0],[-2.0,1000.0]], I.laneBoundary = 5,
+                                      I.lane = [[-2.0,-1000.0],[-2.0,1000.0]], I.laneBoundary = 2.5,
                                       I.minVelocity = 0, I.maxVelocity = 10, I.nominalVelocity = 10,
                                       I.nominalHeading = pi/2,
                                       I.proximity = 3
                                     }
 
               -- state and input weights
-              stateWeight1 = W.StateWeight4 { W.goal = 1,
+              stateWeight1 = W.StateWeight4 { W.goal = 10,
                                             W.lane = 50, W.laneBoundary = 50,
-                                            W.minVelocity = 50, W.maxVelocity = 50, W.nominalVelocity = 100,
-                                            W.nominalHeading = 50,
-                                            W.proximity = 100
+                                            W.minVelocity = 50, W.maxVelocity = 50, W.nominalVelocity = 50,
+                                            W.nominalHeading = 30,
+                                            W.proximity = 15
                                           }
 
-              inputWeight1 = W.InputWeight1 { W.angularVelocity = 1,
+              inputWeight1 = W.InputWeight1 { W.angularVelocity = 10,
                                               W.acceleration = 10 }
-
 
               -- indices
               stateIndex1 = StateIndex1 { positionStateIndices = [0,1],
@@ -61,8 +60,8 @@ player2 :: Floating a => Player a
 player2 = let
               -- state and input costs (slower car in front)
               costInfo1 = I.CostInfo4 { I.goal = Position (-2.0,50.0),
-                                      I.lane = [[-2.0,-1000.0],[-2.0,1000.0]], I.laneBoundary = 5,
-                                      I.minVelocity = 0, I.maxVelocity = 5, I.nominalVelocity = 4,
+                                      I.lane = [[-2.0,-1000.0],[-2.0,1000.0]], I.laneBoundary = 2.5,
+                                      I.minVelocity = 0, I.maxVelocity = 5, I.nominalVelocity = 2,
                                       I.nominalHeading = pi/2,
                                       I.proximity = 3
                                     }
@@ -72,7 +71,7 @@ player2 = let
                                             W.lane = 50, W.laneBoundary = 50,
                                             W.maxVelocity = 50, W.minVelocity = 50, W.nominalVelocity = 100,
                                             W.nominalHeading = 50,
-                                            W.proximity = 100
+                                            W.proximity = 0
                                           }
 
               inputWeight1 = W.InputWeight1 { W.angularVelocity = 1,

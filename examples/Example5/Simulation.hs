@@ -14,9 +14,6 @@ import Type.Dynamics
 import Dynamics.MultiModels
 import Dynamics.Models
 
--- simParamsMaxT :: SimulationParameters
--- simParamsMaxT = SimulationParametersWithMaxTime {iterationCount = 100, sample = 0.1, maxTime = 10}
-
 simParamsHorizon :: SimulationParameters
 simParamsHorizon = SimulationParametersWithHorizon { iterationCount = 100, sample = 0.1, horizon = 100 }
 

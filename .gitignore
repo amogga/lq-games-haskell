@@ -3,3 +3,5 @@
 *.sublime*
 .DS_Store
 .nova
+.claude
+claude.md

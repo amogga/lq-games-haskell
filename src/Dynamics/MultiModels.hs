@@ -12,9 +12,12 @@ linearDynamics dyn cspair = LinearContinuousMultiSystemDynamics { systemMatrix =
   where
     x = priorState cspair
     u = controlInput cspair
-    a = matrix 12 $ concat $ stateJacobian dyn (toList x) (toList u)
-    ball = matrix 6 $ concat $ inputJacobian dyn (toList x) (toList u)
-    bs = map (\p -> ball ?? (All, Pos (fromList p))) (chunksOf 2 [0..5])
+    numStates = fromIntegral $ size x
+    numInputs = fromIntegral $ size u
+    numInputsInt = fromIntegral (size u) :: Int
+    a = matrix numStates $ concat $ stateJacobian dyn (toList x) (toList u)
+    ball = matrix numInputs $ concat $ inputJacobian dyn (toList x) (toList u)
+    bs = map (\p -> ball ?? (All, Pos (fromList p))) (chunksOf 2 (map fromIntegral [0..(numInputsInt-1)]))
 
 -- FIXME: Generalize players, states & input count
 multiPlayerSystem :: [[a] -> [a] -> [a]] -> [a] -> [a] -> [a]
